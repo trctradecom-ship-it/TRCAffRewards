@@ -1,0 +1,216 @@
+
+body{
+background:black;
+color:white;
+font-family:Arial;
+margin:0;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:15px;
+}
+
+h1{
+text-align:center;
+color:#FFD700;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+background:#0f172a;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+button{
+background:linear-gradient(90deg,#FFD700,#ff7a00);
+border:none;
+padding:12px;
+border-radius:8px;
+width:100%;
+font-weight:bold;
+margin-top:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px gold;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#1e293b;
+color:white;
+margin-top:10px;
+}
+
+.card{
+background:#020617;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.grid div{
+background:#111827;
+padding:10px;
+border-radius:8px;
+}
+
+.chartBox{
+background:#020617;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.walletAddress{
+font-size:12px;
+word-break:break-all;
+}
+
+#price{
+color:#16c784;
+font-weight:bold;
+}
+
+@media(max-width:600px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+
+
+/* ========================== INPUT BOXES INSIDE CARD ========================== */
+.card input {
+  width: 100%;                /* full width of the card column */
+  padding: 10px 12px;         /* space inside input */
+  border-radius: 8px;         /* rounded corners */
+  border: 1px solid #444;     /* subtle border */
+  background: #111;           /* dark background inside card */
+  color: #fff;                /* white text */
+  font-size: 1rem;            /* readable text */
+  margin-top: 5px;            /* space above input */
+  box-sizing: border-box;
+}
+
+/* Focus effect for better UX */
+.card input:focus {
+  outline: none;
+  border: 1px solid gold;
+  background: #222;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .card input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+}
+
+
+
+
+/* ========================== GREEN TEXT FOR EVENTS / CONFIRMATION ========================== */
+#status {
+  color: #00c853;          /* bright green text */
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: break-word;   /* long text wraps inside card */
+}
+
+/* Make links inside #status green as well */
+#status a {
+  color: #00c853;          /* bright green */
+  text-decoration: none;    /* remove underline */
+  font-weight: bold;
+}
+
+/* Optional: smaller padding inside card box if needed */
+#status span, #status p {
+  color: #00c853;          /* green text */
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+#status a,
+#status span,
+#status p {
+  background: none !important;   /* remove any leftover green box */
+}
+
+/* ================= CALCULATOR - 2 ROW LAPTOP ================= */
+
+.calculator-card {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* 2 columns → 2 rows (4 inputs total) */
+.calculator-card .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+/* Labels */
+.calculator-card label {
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* Inputs */
+.calculator-card input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: none;
+  background: #0f172a;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Button */
+.calculator-card button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #22c55e;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.calculator-card button:hover {
+  background: #16a34a;
+}
+
+/* Result */
+#rewardResult {
+  margin-top: 15px;
+  font-size: 16px;
+  text-align: center;
+  color: #38bdf8;
+}

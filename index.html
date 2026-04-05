@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRC Dashboard</title>
+
+<link rel="icon" href="./trcnew.png?v=2">
+<link rel="shortcut icon" href="./favicon.ico?v=2">
+<link rel="apple-touch-icon" href="./trcnew.png">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#000000">
+
+  
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>TRC DASHBOARD</h1>
+
+<div class="topbar">
+<div>
+TRC Price
+<span id="price">$0</span>
+</div>
+
+<div id="wallet" class="walletAddress">Wallet Not Connected</div>
+</div>
+
+<button onclick="connectWallet()" class="mainBtn">
+Connect Wallet
+</button>
+
+<div class="chartBox">
+<canvas id="priceChart"></canvas>
+</div>
+
+<div class="card">
+
+<h2>System Info</h2>
+
+<div class="grid">
+
+<div>User Level<br><span id="level">0</span></div>
+
+<div>Base Weight<br><span id="baseWeight">0</span></div>
+
+<div>Temp Weight<br><span id="tempWeight">0</span></div>
+
+<div>Total Weight<br><span id="totalWeight">0</span></div>
+
+<div>Epoch Weight<br><span id="epochWeight">0</span></div>
+
+<div>Current Epoch<br><span id="epoch">0</span></div>
+
+<div>Downline Count<br><span id="downline">0</span></div>
+
+<div>Pending Reward<br><span id="pending">0</span></div>
+
+<div>Reward Pool<br><span id="rewardPool">-</span> TRC</div>
+
+<div>Epoch Start<br><span id="epochStart">-</span></div>
+<div>Next Epoch<br><span id="nextEpoch">-</span></div>
+<div>Epoch Countdown<br><span id="epochTimer">-</span></div>
+<div>Next Claim<br><span id="claimTimer">-</span></div>
+<div>Referrer<br><span id="referrer">-</span></div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Register</h2>
+<input id="ref" placeholder="Referral Address">
+<button onclick="register()">Register</button>
+</div>
+
+<div class="card">
+<h2>Approve TRC</h2>
+<input id="approveAmount" placeholder="TRC Amount">
+<button onclick="approveTRC()">Approve</button>
+</div>
+
+<div class="card">
+
+<h2>Join Levels</h2>
+
+<div class="grid">
+
+<button onclick="joinLevel(1)">Level 1 ($20)</button>
+<button onclick="joinLevel(2)">Level 2 ($40)</button>
+<button onclick="joinLevel(3)">Level 3 ($80)</button>
+<button onclick="joinLevel(4)">Level 4 ($160)</button>
+<button onclick="joinLevel(5)">Level 5 ($320)</button>
+<button onclick="joinLevel(6)">Level 6 ($640)</button>
+
+</div>
+
+</div>
+
+<div class="card">
+<h2>Claim Reward</h2>
+<button onclick="claimReward()">Claim Weekly Reward</button>
+</div>
+
+<div class="card">
+<h2>Transaction Status</h2>
+<p id="status"></p>
+</div>
+
+</div>
+
+<!-- ================= REWARD CALCULATOR ================= -->
+<div class="card calculator-card">
+
+<h2>Reward Calculator</h2>
+
+<div class="grid">
+
+<div>
+<label>Reward Pool</label><br>
+<input type="number" id="pool" placeholder="Enter reward pool">
+</div>
+
+<div>
+<label>Base Weight</label><br>
+<input type="number" id="calcBaseWeight" placeholder="Enter base weight">
+</div>
+
+<div>
+<label>Temp Weight</label><br>
+<input type="number" id="calcTempWeight" placeholder="Enter temp weight">
+</div>
+
+<div>
+<label>Epoch Total Weight</label><br>
+<input type="number" id="calcTotalWeight" placeholder="Enter total weight">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="calculateReward()" class="mainBtn">
+Calculate Reward
+</button>
+
+<p id="rewardResult"></p>
+
+</div>
+  
+<script src="script.js"></script>
+
+</body>
+</html>
