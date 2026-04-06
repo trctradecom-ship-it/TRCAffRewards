@@ -360,36 +360,46 @@ async function showUser(){
 
   if(!contract || !user) return;
 
-  // 🔥 DOUBLE RENDER FIX (mobile)
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      loadUserData();
-    }, 50);
-  });
+  // 🔥 ensure DOM ready before loading
+  setTimeout(async () => {
+    await loadUserData();
+
+    // 🔥 FORCE HARD REFLOW (important)
+    const box = document.getElementById("userBox");
+    box.style.display = "none";
+    void box.offsetHeight;
+    box.style.display = "grid";
+
+  }, 50);
 }
 
 // ================= USER DATA =================
 
 async function loadUserData(){
   try{
-    if(!contract || !user) return;
+    if(!contract || !user){
+      console.log("Wallet not connected");
+      return;
+    }
 
-    const u = await contract.users(user);
+    // 🔥 fetch all in parallel (prevents UI delay)
+    const [u, totalW, down] = await Promise.all([
+      contract.users(user),
+      contract.totalWeight(),
+      contract.downlineCount(user)
+    ]);
 
-    // 🔥 FORCE STRING CONVERSION (mobile fix)
+    // 🔥 SAFE conversions (BigNumber → UI safe)
     const level = u[1] ? Number(u[1]) : 0;
-    const base = u[2] ? u[2].toString() : "0";
-    const temp = u[3] ? u[3].toString() : "0";
+    const base  = u[2] ? u[2].toString() : "0";
+    const temp  = u[3] ? u[3].toString() : "0";
 
-    const totalW = (await contract.totalWeight()).toString();
-    const down = (await contract.downlineCount(user)).toString();
-
-    // 🔥 USE textContent (NOT innerText)
+    // 🔥 FORCE DOM UPDATE (mobile safe)
     document.getElementById("level").textContent = level;
     document.getElementById("baseWeight").textContent = base;
     document.getElementById("tempWeight").textContent = temp;
-    document.getElementById("totalWeight").textContent = totalW;
-    document.getElementById("downline").textContent = down;
+    document.getElementById("totalWeight").textContent = totalW.toString();
+    document.getElementById("downline").textContent = down.toString();
 
     // 🔥 REFERRER FIX
     let ref = u[0];
@@ -397,6 +407,13 @@ async function loadUserData(){
       (!ref || ref === "0x0000000000000000000000000000000000000000")
       ? "No Referrer"
       : ref.slice(0,6) + "..." + ref.slice(-6);
+
+    // 🔥 CRITICAL: force repaint (this fixes mobile blank issue)
+    const box = document.getElementById("userBox");
+    box.style.opacity = "0.99";
+    setTimeout(() => {
+      box.style.opacity = "1";
+    }, 10);
 
   }catch(e){
     console.log("USER LOAD ERROR:", e);
