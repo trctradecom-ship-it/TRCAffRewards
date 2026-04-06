@@ -358,16 +358,16 @@ async function showUser(){
   document.getElementById("tabUser").classList.add("active");
   document.getElementById("tabSystem").classList.remove("active");
 
-  // 🔥 ensure wallet + contract ready
+  // ensure wallet + contract ready
   if(!contract || !user){
     console.log("Wallet not connected yet");
     return;
   }
 
-  // 🔥 mobile safe load
-  setTimeout(() => {
-    loadUserData();
-  }, 100);
+  // ✅ force DOM render first (better than setTimeout)
+  requestAnimationFrame(async () => {
+    await loadUserData();
+  });
 }
 
 // ================= USER DATA =================
