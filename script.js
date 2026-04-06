@@ -358,9 +358,11 @@ async function showUser(){
   document.getElementById("tabUser").classList.add("active");
   document.getElementById("tabSystem").classList.remove("active");
 
-  await loadUserData(); // always reload
+  // 🔥 mobile fix (load after visible)
+  setTimeout(async () => {
+    await loadUserData();
+  }, 100);
 }
-
 
 // ================= USER DATA =================
 
@@ -374,8 +376,8 @@ async function loadUserData(){
     const u = await contract.users(user);
 
     document.getElementById("level").innerText = u[1];
-    document.getElementById("baseWeight").innerText = Number(u[2]);
-    document.getElementById("tempWeight").innerText = Number(u[3]);
+    document.getElementById("baseWeight").innerText = u[2].toString();
+    document.getElementById("tempWeight").innerText = u[3].toString();
     
     document.getElementById("totalWeight").innerText =
       Number(await contract.totalWeight());
