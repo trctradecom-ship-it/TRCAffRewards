@@ -308,7 +308,10 @@ window.onload = function(){
   const ref = params.get("ref");
 
   if(ref){
-    document.getElementById("ref").value = ref;
+    const input = document.getElementById("ref");
+    if(input){
+      input.value = ref;
+    }
   }
 };
 
