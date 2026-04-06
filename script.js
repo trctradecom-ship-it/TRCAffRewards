@@ -375,12 +375,13 @@ async function loadUserData(){
 
     const u = await contract.users(user);
 
-    document.getElementById("level").innerText = u[1];
-    document.getElementById("baseWeight").innerText = u[2].toString();
-    document.getElementById("tempWeight").innerText = u[3].toString();
-    
-    document.getElementById("totalWeight").innerText =
-      Number(await contract.totalWeight());
+    document.getElementById("level").innerText = u.level;
+
+    document.getElementById("baseWeight").innerText =
+      u.baseWeight.toString();
+
+    document.getElementById("tempWeight").innerText =
+      u.tempWeight.toString();
 
     document.getElementById("downline").innerText =
       await contract.downlineCount(user);
