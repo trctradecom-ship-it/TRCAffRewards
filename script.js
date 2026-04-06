@@ -352,8 +352,14 @@ function showSystem(){
 }
 
 async function showUser(){
-  document.getElementById("systemBox").style.display = "none";
-  document.getElementById("userBox").style.display = "grid";
+  const system = document.getElementById("systemBox");
+  const userBox = document.getElementById("userBox");
+
+  system.classList.add("hidden");
+  system.classList.remove("active");
+
+  userBox.classList.remove("hidden");
+  userBox.classList.add("active");
 
   document.getElementById("tabUser").classList.add("active");
   document.getElementById("tabSystem").classList.remove("active");
