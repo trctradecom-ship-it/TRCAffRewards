@@ -97,7 +97,7 @@ async function connectWallet() {
 
     //==== referral=====
     document.getElementById("refLink").value =
-      window.location.origin + "?ref=" + user.slice(0,6) + "...";
+      window.location.origin + "?ref=" + user;
     
     contract = new ethers.Contract(contractAddress, abi, signer);
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
