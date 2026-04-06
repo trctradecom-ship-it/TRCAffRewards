@@ -344,22 +344,48 @@ function calculateReward(){
 
 // ================= TAB SWITCH =================
 
-function showSystem(){
+// ================= SYSTEM TAB =================
+async function showSystem(){
+
   document.getElementById("systemBox").style.display = "grid";
   document.getElementById("userBox").style.display = "none";
 
   document.getElementById("tabSystem").classList.add("active");
   document.getElementById("tabUser").classList.remove("active");
+
+  // ✅ LOADING STATE
+  document.getElementById("price").innerText = "⏳ Loading...";
+  document.getElementById("epoch").innerText = "⏳ Loading...";
+  document.getElementById("pending").innerText = "⏳ Loading...";
+  document.getElementById("rewardPool").innerText = "⏳ Loading...";
+  document.getElementById("epochWeight").innerText = "⏳ Loading...";
+  document.getElementById("epochStart").innerText = "⏳ Loading...";
+  document.getElementById("nextEpoch").innerText = "⏳ Loading...";
+
+  // ✅ FETCH DATA
+  await loadData();
 }
 
+
+// ================= USER TAB =================
 async function showUser(){
+
   document.getElementById("systemBox").style.display = "none";
   document.getElementById("userBox").style.display = "grid";
 
   document.getElementById("tabUser").classList.add("active");
   document.getElementById("tabSystem").classList.remove("active");
 
-  await loadUserData(); // always reload
+  // ✅ LOADING STATE
+  document.getElementById("level").innerText = "⏳ Loading...";
+  document.getElementById("baseWeight").innerText = "⏳ Loading...";
+  document.getElementById("tempWeight").innerText = "⏳ Loading...";
+  document.getElementById("totalWeight").innerText = "⏳ Loading...";
+  document.getElementById("downline").innerText = "⏳ Loading...";
+  document.getElementById("referrer").innerText = "⏳ Loading...";
+
+  // ✅ FETCH DATA
+  await loadUserData();
 }
 
 
