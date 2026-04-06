@@ -94,10 +94,10 @@ async function connectWallet() {
     user = await signer.getAddress();
     
     document.getElementById("wallet").innerText = user;
-
-    //==== referral=====
+    
+    //======referral=========
     document.getElementById("refLink").value =
-      window.location.origin + "?ref=" + user;
+      window.location.href.split("?")[0] + "?ref=" + user;
     
     contract = new ethers.Contract(contractAddress, abi, signer);
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
