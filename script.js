@@ -358,15 +358,13 @@ async function showUser(){
   document.getElementById("tabUser").classList.add("active");
   document.getElementById("tabSystem").classList.remove("active");
 
-  // ensure wallet + contract ready
-  if(!contract || !user){
-    console.log("Wallet not connected yet");
-    return;
-  }
+  if(!contract || !user) return;
 
-  // ✅ force DOM render first (better than setTimeout)
-  requestAnimationFrame(async () => {
-    await loadUserData();
+  // 🔥 DOUBLE RENDER FIX (mobile)
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      loadUserData();
+    }, 50);
   });
 }
 
@@ -374,48 +372,33 @@ async function showUser(){
 
 async function loadUserData(){
   try{
-    if(!contract || !user){
-      console.log("Wallet not connected");
-      return;
-    }
+    if(!contract || !user) return;
 
     const u = await contract.users(user);
 
-    // ✅ LEVEL (safe number)
-    document.getElementById("level").innerText = Number(u[1]);
+    // 🔥 FORCE STRING CONVERSION (mobile fix)
+    const level = u[1] ? Number(u[1]) : 0;
+    const base = u[2] ? u[2].toString() : "0";
+    const temp = u[3] ? u[3].toString() : "0";
 
-    // ✅ WEIGHTS (NO formatUnits — raw integers)
-    document.getElementById("baseWeight").innerText =
-      u[2] ? u[2].toString() : "0";
+    const totalW = (await contract.totalWeight()).toString();
+    const down = (await contract.downlineCount(user)).toString();
 
-    document.getElementById("tempWeight").innerText =
-      u[3] ? u[3].toString() : "0";
+    // 🔥 USE textContent (NOT innerText)
+    document.getElementById("level").textContent = level;
+    document.getElementById("baseWeight").textContent = base;
+    document.getElementById("tempWeight").textContent = temp;
+    document.getElementById("totalWeight").textContent = totalW;
+    document.getElementById("downline").textContent = down;
 
-    // ✅ TOTAL WEIGHT (global — also integer)
-    const totalW = await contract.totalWeight();
-    document.getElementById("totalWeight").innerText =
-      totalW ? totalW.toString() : "0";
-
-    // ✅ DOWNLINE
-    const down = await contract.downlineCount(user);
-    document.getElementById("downline").innerText =
-      down ? down.toString() : "0";
-
-    // ✅ REFERRER
+    // 🔥 REFERRER FIX
     let ref = u[0];
-    if(!ref || ref === "0x0000000000000000000000000000000000000000"){
-      document.getElementById("referrer").innerText = "No Referrer";
-    }else{
-      document.getElementById("referrer").innerText =
-        ref.slice(0,6) + "..." + ref.slice(-6);
-    }
+    document.getElementById("referrer").textContent =
+      (!ref || ref === "0x0000000000000000000000000000000000000000")
+      ? "No Referrer"
+      : ref.slice(0,6) + "..." + ref.slice(-6);
 
   }catch(e){
     console.log("USER LOAD ERROR:", e);
-
-    // ✅ fallback (prevents mobile blank)
-    document.getElementById("baseWeight").innerText = "0";
-    document.getElementById("tempWeight").innerText = "0";
-    document.getElementById("totalWeight").innerText = "0";
   }
 }
