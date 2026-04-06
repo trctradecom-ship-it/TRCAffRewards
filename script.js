@@ -378,33 +378,27 @@ async function loadUserData(){
 
     const u = await contract.users(user);
 
-    // ✅ level (normal number)
     document.getElementById("level").innerText = Number(u[1]);
 
-    // ✅ baseWeight (BigNumber safe)
     document.getElementById("baseWeight").innerText =
-      u[2]?._hex ? parseInt(u[2]._hex, 16) : 0;
+      ethers.utils.formatUnits(u[2], 18);
 
-    // ✅ tempWeight (BigNumber safe)
     document.getElementById("tempWeight").innerText =
-      u[3]?._hex ? parseInt(u[3]._hex, 16) : 0;
+      ethers.utils.formatUnits(u[3], 18);
 
-    // ✅ totalWeight (BigNumber safe)
-    const totalW = await contract.totalWeight();
     document.getElementById("totalWeight").innerText =
-      totalW?._hex ? parseInt(totalW._hex, 16) : 0;
+      ethers.utils.formatUnits(await contract.totalWeight(), 18);
 
-    // ✅ downline
-    const down = await contract.downlineCount(user);
     document.getElementById("downline").innerText =
-      down?._hex ? parseInt(down._hex, 16) : 0;
+      await contract.downlineCount(user);
 
-    // ✅ referrer
     let ref = u[0];
-    document.getElementById("referrer").innerText =
-      ref === "0x0000000000000000000000000000000000000000"
-        ? "No Referrer"
-        : ref.slice(0,6) + "..." + ref.slice(-6);
+    if(ref === "0x0000000000000000000000000000000000000000"){
+      document.getElementById("referrer").innerText = "No Referrer";
+    }else{
+      document.getElementById("referrer").innerText =
+        ref.slice(0,6) + "..." + ref.slice(-6);
+    }
 
   }catch(e){
     console.log(e);
