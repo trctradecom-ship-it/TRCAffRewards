@@ -238,3 +238,119 @@ grid-template-columns:1fr;
   background: #1e3a5f;
   color: #fff;
 }
+
+
+
+
+
+
+
+
+/* ================= MOBILE FIX + CLEAN GRID ================= */
+
+/* Improve grid layout */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* Card items */
+.grid div{
+  background:#111827;
+  padding:12px;
+  border-radius:10px;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* Label (top text) */
+.grid div{
+  font-size:13px;
+  color:#9ca3af;
+}
+
+/* Value (number) */
+.grid span{
+  display:block;
+  margin-top:6px;
+  font-size:18px;
+  font-weight:bold;
+  color:#ffffff;
+}
+
+/* ================= TABS FIX ================= */
+.tabs{
+  display:flex;
+  gap:10px;
+}
+
+.tab{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  font-weight:bold;
+  background:#0b1a2a;
+  color:#aaa;
+  transition:0.3s;
+}
+
+.tab.active{
+  background:#1e3a5f;
+  color:#fff;
+  box-shadow:0 0 10px rgba(255,215,0,0.3);
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media(max-width:600px){
+
+  /* 1 column layout */
+  .grid{
+    grid-template-columns: 1fr;
+    gap:10px;
+  }
+
+  /* smaller cards */
+  .grid div{
+    padding:10px;
+    font-size:12px;
+  }
+
+  /* smaller values */
+  .grid span{
+    font-size:16px;
+  }
+
+  /* tabs full width nice */
+  .tabs{
+    flex-direction:column;
+  }
+
+  .tab{
+    width:100%;
+  }
+
+  /* fix wallet overflow */
+  .walletAddress{
+    font-size:10px;
+  }
+
+}
+
+/* ================= EXTRA CLEAN LOOK ================= */
+
+/* Smooth hover */
+.grid div:hover{
+  transform:scale(1.02);
+  transition:0.2s;
+}
+
+/* Better spacing for card */
+.card{
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
