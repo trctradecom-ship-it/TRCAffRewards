@@ -46,33 +46,37 @@ Connect Wallet
 
 <div class="card">
 
-<h2>System Info</h2>
+<h2>Dashboard</h2>
 
-<div class="grid">
+<div class="tabs">
+  <button id="tabSystem" class="tab active" onclick="showSystem()">System Info</button>
+  <button id="tabUser" class="tab" onclick="showUser()">User Info</button>
+</div>
 
-<div>User Level<br><span id="level">0</span></div>
-
-<div>Base Weight<br><span id="baseWeight">0</span></div>
-
-<div>Temp Weight<br><span id="tempWeight">0</span></div>
-
-<div>Total Weight<br><span id="totalWeight">0</span></div>
-
-<div>Epoch Weight<br><span id="epochWeight">0</span></div>
+<!-- SYSTEM INFO -->
+<div id="systemBox" class="grid">
 
 <div>Current Epoch<br><span id="epoch">0</span></div>
-
-<div>Downline Count<br><span id="downline">0</span></div>
-
-<div>Pending Reward<br><span id="pending">0</span></div>
-
+<div>Epoch Weight<br><span id="epochWeight">0</span></div>
 <div>Reward Pool<br><span id="rewardPool">-</span> TRC</div>
-
 <div>Epoch Start<br><span id="epochStart">-</span></div>
 <div>Next Epoch<br><span id="nextEpoch">-</span></div>
 <div>Epoch Countdown<br><span id="epochTimer">-</span></div>
+
+</div>
+
+<!-- USER INFO -->
+<div id="userBox" class="grid" style="display:none;">
+
+<div>User Level<br><span id="level">0</span></div>
+<div>Base Weight<br><span id="baseWeight">0</span></div>
+<div>Temp Weight<br><span id="tempWeight">0</span></div>
+<div>Total Weight<br><span id="totalWeight">0</span></div>
+<div>Downline Count<br><span id="downline">0</span></div>
+<div>Pending Reward<br><span id="pending">0</span></div>
 <div>Next Claim<br><span id="claimTimer">-</span></div>
 <div>Referrer<br><span id="referrer">-</span></div>
+
 </div>
 
 </div>
