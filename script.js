@@ -140,11 +140,10 @@ async function loadData(){
       await contract.epochTotalWeight();
 
     // ✅ FETCH EPOCH START
-    if(epochStartFromContract === 0){
-      epochStartFromContract = Number(await contract.epochStart());
-      document.getElementById("epochStart").innerText =
-        formatTime(epochStartFromContract);
-    }
+    epochStartFromContract = Number(await contract.epochStart());
+
+    document.getElementById("epochStart").innerText =
+      formatTime(epochStartFromContract);
 
     // ✅ NEXT EPOCH
     if(epochStartFromContract > 0){
