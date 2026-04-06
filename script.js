@@ -109,7 +109,6 @@ async function connectWallet() {
 }
 
 // ========================== LOAD DASHBOARD DATA ==========================
-// ========================== LOAD DASHBOARD DATA ==========================
 async function loadData(){
   try{
     const price = await contract.getTRCPriceUSD();
@@ -125,24 +124,32 @@ async function loadData(){
       chart.update();
     }
 
-    // ✅ SYSTEM DATA ONLY
-    document.getElementById("epoch").innerText =
-      await contract.currentEpoch();
+    document.getElementById("epoch").innerText = await contract.currentEpoch();
+    document.getElementById("downline").innerText = await contract.downlineCount(user);
+    document.getElementById("pending").innerText = human(await contract.pendingReward(user));
+    document.getElementById("rewardPool").innerText = human(await contract.rewardPool());
+    document.getElementById("epochWeight").innerText = await contract.epochTotalWeight();
 
-    document.getElementById("pending").innerText =
-      human(await contract.pendingReward(user));
+    const u = await contract.users(user);
+    document.getElementById("level").innerText = u[1];
 
-    document.getElementById("rewardPool").innerText =
-      human(await contract.rewardPool());
+    // ✅ ADDED REFERRER LOGIC
+    let ref = u[0];
+    if(ref === "0x0000000000000000000000000000000000000000"){
+      document.getElementById("referrer").innerText = "No Referrer";
+    }else{
+      document.getElementById("referrer").innerText =
+        ref.slice(0,6) + "..." + ref.slice(-6);
+    }
 
-    document.getElementById("epochWeight").innerText =
-      await contract.epochTotalWeight();
+    document.getElementById("baseWeight").innerText = u[2];
+    document.getElementById("tempWeight").innerText = u[3];
+    document.getElementById("totalWeight").innerText = await contract.totalWeight();
 
     // ✅ FETCH EPOCH START
     if(epochStartFromContract === 0){
       epochStartFromContract = Number(await contract.epochStart());
-      document.getElementById("epochStart").innerText =
-        formatTime(epochStartFromContract);
+      document.getElementById("epochStart").innerText = formatTime(epochStartFromContract);
     }
 
     // ✅ NEXT EPOCH
@@ -152,12 +159,7 @@ async function loadData(){
       if(epochNumber < 0) epochNumber = 0;
 
       let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
-
-      document.getElementById("nextEpoch").innerText =
-        formatTime(nextEpoch);
-
-      // ✅ ALSO USED BY claimTimer (same countdown)
-      // (your startTimers() already updates claimTimer)
+      document.getElementById("nextEpoch").innerText = formatTime(nextEpoch);
     }
 
   }catch(e){
@@ -312,7 +314,7 @@ function calculateReward(){
   // ✅ FIXED HERE (use totalWeight instead of epochWeight)
 
   document.getElementById("calcTotalWeight").value =
-    document.getElementById("epochWeight").innerText;
+    document.getElementById("totalWeight").innerText;
 
   document.getElementById("pool").value =
     document.getElementById("rewardPool").innerText;
@@ -334,94 +336,4 @@ function calculateReward(){
 
   document.getElementById("rewardResult").innerHTML =
     `Estimated Reward: ${reward.toFixed(4)} TRC`;
-}
-
-
-
-
-
-
-// ================= TAB SWITCH =================
-
-function showSystem(){
-  document.getElementById("systemBox").style.display = "grid";
-  document.getElementById("userBox").style.display = "none";
-
-  document.getElementById("tabSystem").classList.add("active");
-  document.getElementById("tabUser").classList.remove("active");
-}
-
-async function showUser(){
-  const system = document.getElementById("systemBox");
-  const userBox = document.getElementById("userBox");
-
-  system.classList.add("hidden");
-  system.classList.remove("active");
-
-  userBox.classList.remove("hidden");
-  userBox.classList.add("active");
-
-  document.getElementById("tabUser").classList.add("active");
-  document.getElementById("tabSystem").classList.remove("active");
-
-  if(!contract || !user) return;
-
-  // 🔥 ensure DOM ready before loading
-  setTimeout(async () => {
-    await loadUserData();
-
-    // 🔥 FORCE HARD REFLOW (important)
-    const box = document.getElementById("userBox");
-    box.style.display = "none";
-    void box.offsetHeight;
-    box.style.display = "grid";
-
-  }, 50);
-}
-
-// ================= USER DATA =================
-
-async function loadUserData(){
-  try{
-    if(!contract || !user){
-      console.log("Wallet not connected");
-      return;
-    }
-
-    // 🔥 fetch all in parallel (prevents UI delay)
-    const [u, totalW, down] = await Promise.all([
-      contract.users(user),
-      contract.totalWeight(),
-      contract.downlineCount(user)
-    ]);
-
-    // 🔥 SAFE conversions (BigNumber → UI safe)
-    const level = u[1] ? Number(u[1]) : 0;
-    const base  = u[2] ? u[2].toString() : "0";
-    const temp  = u[3] ? u[3].toString() : "0";
-
-    // 🔥 FORCE DOM UPDATE (mobile safe)
-    document.getElementById("level").textContent = level;
-    document.getElementById("baseWeight").textContent = base;
-    document.getElementById("tempWeight").textContent = temp;
-    document.getElementById("totalWeight").textContent = totalW.toString();
-    document.getElementById("downline").textContent = down.toString();
-
-    // 🔥 REFERRER FIX
-    let ref = u[0];
-    document.getElementById("referrer").textContent =
-      (!ref || ref === "0x0000000000000000000000000000000000000000")
-      ? "No Referrer"
-      : ref.slice(0,6) + "..." + ref.slice(-6);
-
-    // 🔥 CRITICAL: force repaint (this fixes mobile blank issue)
-    const box = document.getElementById("userBox");
-    box.style.opacity = "0.99";
-    setTimeout(() => {
-      box.style.opacity = "1";
-    }, 10);
-
-  }catch(e){
-    console.log("USER LOAD ERROR:", e);
-  }
 }
