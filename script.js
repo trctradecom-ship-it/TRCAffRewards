@@ -374,26 +374,36 @@ async function showUser(){
 
 async function loadUserData(){
   try{
-    if(!contract || !user) return;
+    if(!contract || !user){
+      console.log("Wallet not connected");
+      return;
+    }
 
     const u = await contract.users(user);
 
+    // ✅ LEVEL (safe number)
     document.getElementById("level").innerText = Number(u[1]);
 
+    // ✅ WEIGHTS (NO formatUnits — raw integers)
     document.getElementById("baseWeight").innerText =
-      ethers.utils.formatUnits(u[2], 18);
+      u[2] ? u[2].toString() : "0";
 
     document.getElementById("tempWeight").innerText =
-      ethers.utils.formatUnits(u[3], 18);
+      u[3] ? u[3].toString() : "0";
 
+    // ✅ TOTAL WEIGHT (global — also integer)
+    const totalW = await contract.totalWeight();
     document.getElementById("totalWeight").innerText =
-      ethers.utils.formatUnits(await contract.totalWeight(), 18);
+      totalW ? totalW.toString() : "0";
 
+    // ✅ DOWNLINE
+    const down = await contract.downlineCount(user);
     document.getElementById("downline").innerText =
-      await contract.downlineCount(user);
+      down ? down.toString() : "0";
 
+    // ✅ REFERRER
     let ref = u[0];
-    if(ref === "0x0000000000000000000000000000000000000000"){
+    if(!ref || ref === "0x0000000000000000000000000000000000000000"){
       document.getElementById("referrer").innerText = "No Referrer";
     }else{
       document.getElementById("referrer").innerText =
@@ -401,6 +411,11 @@ async function loadUserData(){
     }
 
   }catch(e){
-    console.log(e);
+    console.log("USER LOAD ERROR:", e);
+
+    // ✅ fallback (prevents mobile blank)
+    document.getElementById("baseWeight").innerText = "0";
+    document.getElementById("tempWeight").innerText = "0";
+    document.getElementById("totalWeight").innerText = "0";
   }
 }
