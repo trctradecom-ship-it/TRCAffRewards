@@ -290,6 +290,28 @@ grid-template-columns:1fr;
 
 
 
+/* ===== FIX REFERRAL BOX OVERFLOW ===== */
+
+.box {
+  width: 100%;
+  max-width: 500px;   /* keeps it centered and not too wide */
+  margin: 20px auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+  box-sizing: border-box;   /* ✅ MOST IMPORTANT FIX */
+}
+
+
+
 
 
 
