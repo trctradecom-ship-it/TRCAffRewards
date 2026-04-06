@@ -92,9 +92,13 @@ async function connectWallet() {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     user = await signer.getAddress();
-
+    
     document.getElementById("wallet").innerText = user;
 
+    //==== referral=====
+    document.getElementById("refLink").value =
+      window.location.origin + "?ref=" + user.slice(0,6) + "...";
+    
     contract = new ethers.Contract(contractAddress, abi, signer);
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
 
@@ -296,7 +300,17 @@ function listenEvents() {
 }
 
 // ========================== INITIALIZE ==========================
-window.onload = initChart;
+window.onload = function(){
+  initChart();
+
+  // ✅ AUTO FILL REFERRAL
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get("ref");
+
+  if(ref){
+    document.getElementById("ref").value = ref;
+  }
+};
 
 // ========================== REWARD CALCULATOR ==========================
 function calculateReward(){
@@ -421,3 +435,20 @@ async function loadUserData(){
     console.log("User load error:", e);
   }
 }
+
+
+// ======copy Referral Adress======
+
+function copyRef(){
+  const link = document.getElementById("refLink").value;
+
+  if(!link){
+    alert("Connect wallet first");
+    return;
+  }
+
+  navigator.clipboard.writeText(link);
+  alert("✅ Link copied!");
+}
+
+
