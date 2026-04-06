@@ -245,26 +245,6 @@ grid-template-columns:1fr;
 
 
 
-/* FORCE MOBILE RENDER FIX */
-#userBox {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-/* when visible */
-#userBox.active {
-  display: grid !important;
-  opacity: 1;
-  transform: translateZ(0);
-}
-
-/* when hidden */
-#userBox.hidden {
-  display: none !important;
-  opacity: 0;
-}
 
 
 
