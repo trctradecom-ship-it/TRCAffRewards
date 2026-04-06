@@ -214,3 +214,27 @@ grid-template-columns:1fr;
   text-align: center;
   color: #38bdf8;
 }
+
+
+
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  background: #0b1a2a;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.tab.active {
+  background: #1e3a5f;
+  color: #fff;
+}
