@@ -313,16 +313,17 @@ grid-template-columns:1fr;
 
 
 
-
 @media (max-width: 768px) {
-  .referral-link {
-    margin-left: 16px;
-    margin-right: 16px;
+
+  /* Target the full referral block */
+  .referral-section,
+  .referral-link,
+  .referral-card {
+    width: calc(100% - 32px) !important; /* creates left+right gap */
+    margin: 0 auto !important;
   }
+
 }
-
-
-
 
 
 
