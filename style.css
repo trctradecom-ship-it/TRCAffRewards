@@ -240,11 +240,53 @@ grid-template-columns:1fr;
 }
 
 
+/* mobile and laptop for referral */
 
 
 
+.box {
+  background: #111a2e;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
 
+.box h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
 
+.box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, orange, gold);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.box button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .box {
+    max-width: 500px;
+    margin: 20px auto;
+  }
+}
 
 
 
