@@ -314,4 +314,16 @@ grid-template-columns:1fr;
 
 
 
+@media (max-width: 768px) {
+  .referral-link {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
+
+
+
+
+
 
