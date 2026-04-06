@@ -339,28 +339,3 @@ function calculateReward(){
 }
 
 
-
-// =====show sysytem=====
-
-
-function showSystem(){
-  document.getElementById("systemBox").style.display = "grid";
-  document.getElementById("userBox").style.display = "none";
-
-  document.getElementById("tabSystem").classList.add("active");
-  document.getElementById("tabUser").classList.remove("active");
-
-  // optional refresh
-  loadData();
-}
-
-function showUser(){
-  document.getElementById("systemBox").style.display = "none";
-  document.getElementById("userBox").style.display = "grid";
-
-  document.getElementById("tabSystem").classList.remove("active");
-  document.getElementById("tabUser").classList.add("active");
-
-  // ✅ THIS IS THE FIX → reload user data when clicked
-  loadData();
-}
