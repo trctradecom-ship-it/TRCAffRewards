@@ -75,7 +75,10 @@ Connect Wallet
 <div>Total Weight<br><span id="totalWeight">0</span></div>
 <div>Downline Count<br><span id="downline">0</span></div>
 <div>Referrer<br><span id="referrer">-</span></div>
-
+<div>
+  Last Epoch Reward Pool<br>
+  <span id="lastEpochReward">0</span> TRC
+</div>
 </div>
 
 </div>
@@ -139,8 +142,9 @@ Connect Wallet
 <div class="grid">
 
 <div>
-<label>Reward Pool</label><br>
-<input type="number" id="pool" placeholder="Enter reward pool">
+<div>
+  <label>Reward Pool (Last Epoch)</label><br>
+  <input id="pool" readonly>
 </div>
 
 <div>
