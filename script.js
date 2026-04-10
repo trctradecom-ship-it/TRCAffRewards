@@ -139,8 +139,7 @@ async function loadData(){
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    document.getElementById("epochWeight").innerText =
-      await contract.epochTotalWeight();
+    
 
     // ✅ FETCH EPOCH START
     epochStartFromContract = Number(await contract.epochStart());
@@ -427,6 +426,10 @@ async function loadUserData(){
 
     const lastSnapshot = await contract.getLastEpochRewardSnapshot();
     document.getElementById("lastEpochReward").innerText = human(lastSnapshot);
+
+    document.getElementById("epochWeight").innerText =
+      await contract.epochTotalWeight();
+
     
     let ref = u[0];
     if(ref === "0x0000000000000000000000000000000000000000"){
