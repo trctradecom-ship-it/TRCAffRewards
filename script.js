@@ -34,7 +34,7 @@ const abi = [
   "function joinLevel5()",
   "function joinLevel6()",
   "function claimReward()",
-
+  "function getLastEpochRewardSnapshot() view returns(uint256)",
   "event Registered(address indexed user,address indexed referrer)",
   "event LevelJoined(address indexed user,uint8 level,uint256 amount)",
   "event RewardClaimed(address indexed user,uint256 amount)",
@@ -325,13 +325,13 @@ function calculateReward(){
   document.getElementById("calcTempWeight").value =
     document.getElementById("tempWeight").innerText;
 
-  // ✅ FIXED HERE (use totalWeight instead of epochWeight)
+  // ✅ FIXED HERE (use epochWeight)
 
   document.getElementById("calcTotalWeight").value =
     document.getElementById("epochWeight").innerText;
 
   document.getElementById("pool").value =
-    document.getElementById("rewardPool").innerText;
+    document.getElementById("lastEpochReward").innerText;
 
   let pool = parseFloat(document.getElementById("pool").value);
   let base = parseFloat(document.getElementById("calcBaseWeight").value) || 0;
@@ -425,6 +425,9 @@ async function loadUserData(){
     document.getElementById("downline").innerText =
       await contract.downlineCount(user);
 
+    const lastSnapshot = await contract.getLastEpochRewardSnapshot();
+    document.getElementById("lastEpochReward").innerText = human(lastSnapshot);
+    
     let ref = u[0];
     if(ref === "0x0000000000000000000000000000000000000000"){
       document.getElementById("referrer").innerText = "No Referrer";
