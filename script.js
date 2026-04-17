@@ -6,10 +6,10 @@ let contract;
 let token;
 let user;
 let chart;
-
+let epochDurationFromContract = 0;
 // ✅ NEW (epoch)
 let epochStartFromContract = 0;
-const EPOCH_DURATION = 7 * 24 * 60 * 60;
+
 
 // ========================== CONTRACT ADDRESSES ==========================
 const contractAddress = "0xD651d234B173b511eE2A0ADF319491e9562cE58f";
@@ -19,13 +19,15 @@ const tokenAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
 const abi = [
   "function currentEpoch() view returns(uint256)",
   "function epochStart() view returns(uint256)", // ✅ ADDED
+  "function getEpochDuration() view returns(uint256)",
+  "function epochDuration() view returns(uint256)",
   "function downlineCount(address) view returns(uint256)",
   "function epochTotalWeight() view returns(uint256)",
   "function pendingReward(address) view returns(uint256)",
   "function getTRCPriceUSD() view returns(uint256)",
-  "function totalWeight() view returns(uint256)",
+  "function totalBaseWeight() view returns(uint256)",
   "function rewardPool() view returns(uint256)",
-  "function users(address) view returns(address,uint8,uint256,uint256,uint256,uint256,uint256)",
+  "function users(address) view returns(address,uint8,uint256,uint256,uint256,uint256,uint256,uint256)",
   "function register(address)",
   "function joinLevel1()",
   "function joinLevel2()",
@@ -119,9 +121,10 @@ async function loadData(){
     const price = await contract.getTRCPriceUSD();
     document.getElementById("price").innerText = "$"+usd(price);
 
+    // ✅ FIX CHART (number not string)
     if(chart){
       chart.data.labels.push(new Date().toLocaleTimeString());
-      chart.data.datasets[0].data.push(usd(price));
+      chart.data.datasets[0].data.push(Number(usd(price)));
       if(chart.data.labels.length>20){
         chart.data.labels.shift();
         chart.data.datasets[0].data.shift();
@@ -129,37 +132,54 @@ async function loadData(){
       chart.update();
     }
 
-    // ✅ SYSTEM DATA ONLY
+    // ✅ SYSTEM DATA
     document.getElementById("epoch").innerText =
       await contract.currentEpoch();
 
-    document.getElementById("pending").innerText =
-      human(await contract.pendingReward(user));
+    // ✅ FIX PENDING UI
+    let pending = await contract.pendingReward(user);
+    if(pending == 0){
+      document.getElementById("pending").innerText =
+        "⏳ After epoch ends";
+    } else {
+      document.getElementById("pending").innerText =
+        human(pending);
+    }
 
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    
+    // ✅ NEW (optional but recommended)
+    document.getElementById("taxPool").innerText =
+      human(await contract.taxPool());
 
-    // ✅ FETCH EPOCH START
+    document.getElementById("totalUsers").innerText =
+      await contract.getTotalUsers();
+
+    // ✅ FETCH EPOCH DATA
     epochStartFromContract = Number(await contract.epochStart());
+    epochDurationFromContract = Number(await contract.getEpochDuration());
 
     document.getElementById("epochStart").innerText =
       formatTime(epochStartFromContract);
 
-    // ✅ NEXT EPOCH
-    if(epochStartFromContract > 0){
+    // ✅ NEXT EPOCH (FIXED)
+    if(epochStartFromContract > 0 && epochDurationFromContract > 0){
+
       let now = Math.floor(Date.now()/1000);
-      let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
+
+      let epochNumber = Math.floor(
+        (now - epochStartFromContract) / epochDurationFromContract
+      );
+
       if(epochNumber < 0) epochNumber = 0;
 
-      let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
+      let nextEpoch =
+        epochStartFromContract +
+        ((epochNumber + 1) * epochDurationFromContract);
 
       document.getElementById("nextEpoch").innerText =
         formatTime(nextEpoch);
-
-      // ✅ ALSO USED BY claimTimer (same countdown)
-      // (your startTimers() already updates claimTimer)
     }
 
   }catch(e){
@@ -171,32 +191,40 @@ async function loadData(){
 function startTimers(){
   setInterval(()=>{
 
-    if(epochStartFromContract === 0) return;
+    // ❌ wait until contract data loaded
+    if(epochStartFromContract === 0 || epochDurationFromContract === 0) return;
 
     let now = Math.floor(Date.now()/1000);
 
-    let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
+    // ✅ use contract duration (NOT EPOCH_DURATION)
+    let epochNumber = Math.floor(
+      (now - epochStartFromContract) / epochDurationFromContract
+    );
+
     if(epochNumber < 0) epochNumber = 0;
 
-    let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
+    let nextEpoch =
+      epochStartFromContract + ((epochNumber + 1) * epochDurationFromContract);
 
     let remaining = nextEpoch - now;
     if(remaining < 0) remaining = 0;
 
-    let d = Math.floor(remaining/86400);
+    let d = Math.floor(remaining / 86400);
     remaining %= 86400;
-    let h = Math.floor(remaining/3600);
+
+    let h = Math.floor(remaining / 3600);
     remaining %= 3600;
-    let m = Math.floor(remaining/60);
+
+    let m = Math.floor(remaining / 60);
     let s = remaining % 60;
 
-    document.getElementById("epochTimer").innerText =
-      `${d}d ${h}h ${m}m ${s}s`;
+    let timeText = `${d}d ${h}h ${m}m ${s}s`;
 
-    document.getElementById("claimTimer").innerText =
-      `${d}d ${h}h ${m}m ${s}s`;
+    // ✅ both timers same (your logic)
+    document.getElementById("epochTimer").innerText = timeText;
+    document.getElementById("claimTimer").innerText = timeText;
 
-  },1000);
+  }, 1000);
 }
 
 // ========================== HANDLE TRANSACTIONS ==========================
