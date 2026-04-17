@@ -332,9 +332,9 @@ async function loadUserData(){
     document.getElementById("baseWeight").innerText = u[2];
     document.getElementById("tempWeight").innerText = u[3];
 
-    document.getElementById("totalWeight").innerText =
-      await contract.totalBaseWeight();
-
+    const el = document.getElementById("totalWeight");
+    if(el) el.innerText = await contract.totalBaseWeight();
+    
     document.getElementById("downline").innerText =
       await contract.downlineCount(user);
 
