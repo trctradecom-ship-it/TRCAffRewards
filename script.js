@@ -1,4 +1,3 @@
-
 // ========================== VARIABLES ==========================
 let provider;
 let signer;
@@ -7,9 +6,7 @@ let token;
 let user;
 let chart;
 let epochDurationFromContract = 0;
-// ✅ NEW (epoch)
 let epochStartFromContract = 0;
-
 
 // ========================== CONTRACT ADDRESSES ==========================
 const contractAddress = "0xD651d234B173b511eE2A0ADF319491e9562cE58f";
@@ -18,7 +15,7 @@ const tokenAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
 // ========================== ABI ==========================
 const abi = [
   "function currentEpoch() view returns(uint256)",
-  "function epochStart() view returns(uint256)", // ✅ ADDED
+  "function epochStart() view returns(uint256)",
   "function getEpochDuration() view returns(uint256)",
   "function epochDuration() view returns(uint256)",
   "function downlineCount(address) view returns(uint256)",
@@ -27,6 +24,8 @@ const abi = [
   "function getTRCPriceUSD() view returns(uint256)",
   "function totalBaseWeight() view returns(uint256)",
   "function rewardPool() view returns(uint256)",
+  "function taxPool() view returns(uint256)",
+  "function getTotalUsers() view returns(uint256)",
   "function users(address) view returns(address,uint8,uint256,uint256,uint256,uint256,uint256,uint256)",
   "function register(address)",
   "function joinLevel1()",
@@ -56,7 +55,6 @@ function usd(v){
   return Number(ethers.utils.formatUnits(v,18)).toFixed(4);
 }
 
-// ✅ NEW
 function formatTime(ts){
   return new Date(ts * 1000).toLocaleString();
 }
@@ -72,76 +70,75 @@ function initChart(){
         label:"TRC Price USD",
         data:[0],
         tension:0.4,
-        borderColor: "blue",
-        backgroundColor: "rgba(0,0,255,0.1)"
+        borderColor:"blue",
+        backgroundColor:"rgba(0,0,255,0.1)"
       }]
     },
     options:{ responsive:true, maintainAspectRatio:false }
   });
 }
 
-// ========================== CONNECT WALLET ==========================
-async function connectWallet() {
-  try {
-    if (!window.ethereum) {
-      alert("MetaMask not found!");
+// ========================== CONNECT ==========================
+async function connectWallet(){
+  try{
+    if(!window.ethereum){
+      alert("MetaMask not found");
       return;
     }
 
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
+    await window.ethereum.request({ method:"eth_requestAccounts" });
 
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     user = await signer.getAddress();
-    
+
     document.getElementById("wallet").innerText = user;
-    
-    //======referral=========
+
     document.getElementById("refLink").value =
       window.location.href.split("?")[0] + "?ref=" + user;
-    
+
     contract = new ethers.Contract(contractAddress, abi, signer);
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
 
-    loadData();
-    
+    await loadData();
+    await loadUserData();
 
-    startTimers(); // ✅ ADDED
+    startTimers();
     listenEvents();
 
-  } catch (err) {
-    console.log(err);
+  }catch(e){
+    console.log(e);
   }
 }
 
-// ========================== LOAD DASHBOARD DATA ==========================
-// ========================== LOAD DASHBOARD DATA ==========================
+// ========================== LOAD DATA ==========================
 async function loadData(){
   try{
+    if(!contract) return;
+
     const price = await contract.getTRCPriceUSD();
     document.getElementById("price").innerText = "$"+usd(price);
 
-    // ✅ FIX CHART (number not string)
     if(chart){
       chart.data.labels.push(new Date().toLocaleTimeString());
       chart.data.datasets[0].data.push(Number(usd(price)));
-      if(chart.data.labels.length>20){
+
+      if(chart.data.labels.length > 20){
         chart.data.labels.shift();
         chart.data.datasets[0].data.shift();
       }
       chart.update();
     }
 
-    // ✅ SYSTEM DATA
     document.getElementById("epoch").innerText =
       await contract.currentEpoch();
 
-    // ✅ FIX PENDING UI
-    let pending = await contract.pendingReward(user);
+    let pending = user ? await contract.pendingReward(user) : 0;
+
     if(pending == 0){
       document.getElementById("pending").innerText =
         "⏳ After epoch ends";
-    } else {
+    }else{
       document.getElementById("pending").innerText =
         human(pending);
     }
@@ -149,23 +146,23 @@ async function loadData(){
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    // ✅ NEW (optional but recommended)
-    document.getElementById("taxPool").innerText =
-      human(await contract.taxPool());
+    const taxEl = document.getElementById("taxPool");
+    if(taxEl){
+      taxEl.innerText = human(await contract.taxPool());
+    }
 
-    document.getElementById("totalUsers").innerText =
-      await contract.getTotalUsers();
+    const usersEl = document.getElementById("totalUsers");
+    if(usersEl){
+      usersEl.innerText = await contract.getTotalUsers();
+    }
 
-    // ✅ FETCH EPOCH DATA
     epochStartFromContract = Number(await contract.epochStart());
     epochDurationFromContract = Number(await contract.getEpochDuration());
 
     document.getElementById("epochStart").innerText =
       formatTime(epochStartFromContract);
 
-    // ✅ NEXT EPOCH (FIXED)
     if(epochStartFromContract > 0 && epochDurationFromContract > 0){
-
       let now = Math.floor(Date.now()/1000);
 
       let epochNumber = Math.floor(
@@ -191,20 +188,19 @@ async function loadData(){
 function startTimers(){
   setInterval(()=>{
 
-    // ❌ wait until contract data loaded
-    if(epochStartFromContract === 0 || epochDurationFromContract === 0) return;
-
     let now = Math.floor(Date.now()/1000);
 
-    // ✅ use contract duration (NOT EPOCH_DURATION)
+    let start = epochStartFromContract || now;
+    let duration = epochDurationFromContract || 86400;
+
     let epochNumber = Math.floor(
-      (now - epochStartFromContract) / epochDurationFromContract
+      (now - start) / duration
     );
 
     if(epochNumber < 0) epochNumber = 0;
 
     let nextEpoch =
-      epochStartFromContract + ((epochNumber + 1) * epochDurationFromContract);
+      start + ((epochNumber + 1) * duration);
 
     let remaining = nextEpoch - now;
     if(remaining < 0) remaining = 0;
@@ -220,38 +216,10 @@ function startTimers(){
 
     let timeText = `${d}d ${h}h ${m}m ${s}s`;
 
-    // ✅ both timers same (your logic)
     document.getElementById("epochTimer").innerText = timeText;
     document.getElementById("claimTimer").innerText = timeText;
 
-  }, 1000);
-}
-
-// ========================== HANDLE TRANSACTIONS ==========================
-async function handleTx(tx){
-  try{
-    // ⏳ waiting wallet confirm
-    document.getElementById("status").innerHTML =
-      `<span class="tx-pending">⏳ Waiting for confirmation...</span>`;
-
-    const sent = await tx;
-
-    // 🔄 pending with polygonscan link
-    document.getElementById("status").innerHTML =
-      `<a href="https://polygonscan.com/tx/${sent.hash}" target="_blank">
-        🔄 Transaction Pending (View)
-      </a>`;
-
-    await sent.wait();
-
-    // ✅ after confirmed (EVENT WILL UPDATE AFTER THIS)
-    document.getElementById("status").innerHTML =
-      `<span class="tx-success">✅ Transaction Confirmed</span>`;
-
-  }catch(e){
-    document.getElementById("status").innerHTML =
-      `<span class="tx-fail">❌ Transaction Failed</span>`;
-  }
+  },1000);
 }
 
 // ========================== USER ACTIONS ==========================
@@ -279,7 +247,34 @@ async function claimReward(){
   handleTx(contract.claimReward());
 }
 
-// ========================== EVENT LISTENERS ==========================
+// ========================== HANDLE TX ==========================
+async function handleTx(tx){
+  try{
+    document.getElementById("status").innerHTML =
+      `<span class="tx-pending">⏳ Waiting...</span>`;
+
+    const sent = await tx;
+
+    document.getElementById("status").innerHTML =
+      `<a href="https://polygonscan.com/tx/${sent.hash}" target="_blank">
+        🔄 Pending
+      </a>`;
+
+    await sent.wait();
+
+    document.getElementById("status").innerHTML =
+      `<span class="tx-success">✅ Confirmed</span>`;
+
+    await loadData();
+    await loadUserData();
+
+  }catch(e){
+    document.getElementById("status").innerHTML =
+      `<span class="tx-fail">❌ Failed</span>`;
+  }
+}
+
+// ========================== EVENTS ==========================
 function listenEvents() {
   if (!contract || !user) return;
 
@@ -311,7 +306,8 @@ function listenEvents() {
     contract.on("EMAUpdated", (price) => {
       if(chart){
         chart.data.labels.push(new Date().toLocaleTimeString());
-        chart.data.datasets[0].data.push(usd(price));
+        chart.data.datasets[0].data.push(Number(usd(price)));
+
         if(chart.data.labels.length > 20){
           chart.data.labels.shift();
           chart.data.datasets[0].data.shift();
@@ -325,11 +321,45 @@ function listenEvents() {
   }
 }
 
-// ========================== INITIALIZE ==========================
+// ========================== USER DATA ==========================
+async function loadUserData(){
+  try{
+    if(!contract || !user) return;
+
+    const u = await contract.users(user);
+
+    document.getElementById("level").innerText = u[1];
+    document.getElementById("baseWeight").innerText = u[2];
+    document.getElementById("tempWeight").innerText = u[3];
+
+    document.getElementById("totalWeight").innerText =
+      await contract.totalBaseWeight();
+
+    document.getElementById("downline").innerText =
+      await contract.downlineCount(user);
+
+    const last = await contract.getLastEpochRewardSnapshot();
+    document.getElementById("lastEpochReward").innerText = human(last);
+
+    document.getElementById("epochWeight").innerText =
+      await contract.epochTotalWeight();
+
+    let ref = u[0];
+
+    document.getElementById("referrer").innerText =
+      ref === "0x0000000000000000000000000000000000000000"
+      ? "No Referrer"
+      : ref.slice(0,6) + "..." + ref.slice(-6);
+
+  }catch(e){
+    console.log(e);
+  }
+}
+
+// ========================== INIT ==========================
 window.onload = function(){
   initChart();
 
-  // ✅ AUTO FILL REFERRAL
   const params = new URLSearchParams(window.location.search);
   const ref = params.get("ref");
 
@@ -341,140 +371,7 @@ window.onload = function(){
   }
 };
 
-// ========================== REWARD CALCULATOR ==========================
-function calculateReward(){
-  
-  // Auto fill from dashboard
-
-  document.getElementById("calcBaseWeight").value =
-    document.getElementById("baseWeight").innerText;
-
-  document.getElementById("calcTempWeight").value =
-    document.getElementById("tempWeight").innerText;
-
-  // ✅ FIXED HERE (use epochWeight)
-
-  document.getElementById("calcTotalWeight").value =
-    document.getElementById("epochWeight").innerText;
-
-  document.getElementById("pool").value =
-    document.getElementById("lastEpochReward").innerText;
-
-  let pool = parseFloat(document.getElementById("pool").value);
-  let base = parseFloat(document.getElementById("calcBaseWeight").value) || 0;
-  let temp = parseFloat(document.getElementById("calcTempWeight").value) || 0;
-  let total = parseFloat(document.getElementById("calcTotalWeight").value);
-
-  let userWeight = base + temp;
-
-  if(total === 0){
-    document.getElementById("rewardResult").innerHTML =
-      "⚠️ No participants yet";
-    return;
-  }
-
-  let reward = (pool * userWeight) / total;
-
-  document.getElementById("rewardResult").innerHTML =
-    `Estimated Reward: ${reward.toFixed(4)} TRC`;
-}
-
-
-
-
-
-
-// ================= TAB SWITCH =================
-
-// ================= SYSTEM TAB =================
-async function showSystem(){
-
-  document.getElementById("systemBox").style.display = "grid";
-  document.getElementById("userBox").style.display = "none";
-
-  document.getElementById("tabSystem").classList.add("active");
-  document.getElementById("tabUser").classList.remove("active");
-
-  // ✅ LOADING STATE
-  document.getElementById("price").innerText = "⏳ Loading...";
-  document.getElementById("epoch").innerText = "⏳ Loading...";
-  document.getElementById("pending").innerText = "⏳ Loading...";
-  document.getElementById("rewardPool").innerText = "⏳ Loading...";
-  document.getElementById("epochWeight").innerText = "⏳ Loading...";
-  document.getElementById("epochStart").innerText = "⏳ Loading...";
-  document.getElementById("nextEpoch").innerText = "⏳ Loading...";
-
-  // ✅ FETCH DATA
-  await loadData();
-}
-
-
-// ================= USER TAB =================
-async function showUser(){
-
-  document.getElementById("systemBox").style.display = "none";
-  document.getElementById("userBox").style.display = "grid";
-
-  document.getElementById("tabUser").classList.add("active");
-  document.getElementById("tabSystem").classList.remove("active");
-
-  // ✅ LOADING STATE
-  document.getElementById("level").innerText = "⏳ Loading...";
-  document.getElementById("baseWeight").innerText = "⏳ Loading...";
-  document.getElementById("tempWeight").innerText = "⏳ Loading...";
-  document.getElementById("totalWeight").innerText = "⏳ Loading...";
-  document.getElementById("downline").innerText = "⏳ Loading...";
-  document.getElementById("referrer").innerText = "⏳ Loading...";
-
-  // ✅ FETCH DATA
-  await loadUserData();
-}
-
-
-// ================= USER DATA =================
-
-async function loadUserData(){
-  try{
-    if(!contract || !user){
-      console.log("Wallet not connected");
-      return;
-    }
-
-    const u = await contract.users(user);
-
-    document.getElementById("level").innerText = u[1];
-    document.getElementById("baseWeight").innerText = u[2];
-    document.getElementById("tempWeight").innerText = u[3];
-
-    document.getElementById("totalWeight").innerText =
-      await contract.totalWeight();
-
-    document.getElementById("downline").innerText =
-      await contract.downlineCount(user);
-
-    const lastSnapshot = await contract.getLastEpochRewardSnapshot();
-    document.getElementById("lastEpochReward").innerText = human(lastSnapshot);
-
-    document.getElementById("epochWeight").innerText =
-      await contract.epochTotalWeight();
-
-    
-    let ref = u[0];
-    if(ref === "0x0000000000000000000000000000000000000000"){
-      document.getElementById("referrer").innerText = "No Referrer";
-    }else{
-      document.getElementById("referrer").innerText =
-        ref.slice(0,6) + "..." + ref.slice(-6);
-    }
-
-  }catch(e){
-    console.log("User load error:", e);
-  }
-}
-
-
-// ======copy Referral Adress======
-
+// ========================== COPY REF ==========================
 function copyRef(){
   const link = document.getElementById("refLink").value;
 
@@ -486,5 +383,3 @@ function copyRef(){
   navigator.clipboard.writeText(link);
   alert("✅ Link copied!");
 }
-
-
