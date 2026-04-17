@@ -12,7 +12,7 @@ let epochStartFromContract = 0;
 const EPOCH_DURATION = 7 * 24 * 60 * 60;
 
 // ========================== CONTRACT ADDRESSES ==========================
-const contractAddress = "0x88Cc2F9b04A21cD33e22d65CA836287D99a459AA";
+const contractAddress = "0xD651d234B173b511eE2A0ADF319491e9562cE58f";
 const tokenAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
 
 // ========================== ABI ==========================
