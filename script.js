@@ -1,5 +1,5 @@
 // ========================== VARIABLES ==========================  
-let provider;
+let provider; 
 let signer;
 let contract;
 let token;
