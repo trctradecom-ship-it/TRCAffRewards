@@ -5,7 +5,7 @@ let contract;
 let token;
 let user;
 let chart;
-let epochDurationFromContract = 0;
+let epochDurationFromContract = 0; 
 let epochStartFromContract = 0;
 
 // ========================== CONTRACT ADDRESSES ==========================
