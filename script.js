@@ -114,20 +114,25 @@ async function connectWallet() {
 // ========================== LOAD DASHBOARD DATA ==========================
 async function loadData(){
   try{
+
+    if(!contract) return;
+
     const price = await contract.getTRCPriceUSD();
     document.getElementById("price").innerText = "$"+usd(price);
 
+    // ================= CHART =================
     if(chart){
       chart.data.labels.push(new Date().toLocaleTimeString());
-      chart.data.datasets[0].data.push(usd(price));
-      if(chart.data.labels.length>20){
+      chart.data.datasets[0].data.push(Number(usd(price)));
+
+      if(chart.data.labels.length > 20){
         chart.data.labels.shift();
         chart.data.datasets[0].data.shift();
       }
       chart.update();
     }
 
-    // ✅ SYSTEM DATA ONLY
+    // ================= SYSTEM DATA =================
     document.getElementById("epoch").innerText =
       await contract.currentEpoch();
 
@@ -137,12 +142,13 @@ async function loadData(){
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    // ================= FIX: EPOCH DATA SYNC =================
+    // ================= EPOCH DATA =================
     epochStartFromContract = Number(await contract.epochStart());
-    epochDurationFromContract = Number(await contract.getEpochDuration()); // 🔥 ADDED
+    epochDurationFromContract = Number(await contract.getEpochDuration());
 
+    // ================= EPOCH START =================
     document.getElementById("epochStart").innerText =
-      formatTime(epochStartFromContract);
+      epochStartFromContract ? formatTime(epochStartFromContract) : "-";
 
     // ================= NEXT EPOCH =================
     if(epochStartFromContract > 0 && epochDurationFromContract > 0){
@@ -163,11 +169,11 @@ async function loadData(){
         formatTime(nextEpoch);
 
     } else {
-      document.getElementById("nextEpoch").innerText = "⏳ Loading...";
+      document.getElementById("nextEpoch").innerText = "-";
     }
 
   }catch(e){
-    console.log(e);
+    console.log("loadData error:", e);
   }
 }
 
@@ -175,19 +181,22 @@ async function loadData(){
 function startTimers(){
   setInterval(()=>{
 
+    // 🚨 WAIT UNTIL CONTRACT DATA IS READY
+    if(!epochStartFromContract || !epochDurationFromContract){
+      document.getElementById("epochTimer").innerText = "-";
+      document.getElementById("claimTimer").innerText = "-";
+      return;
+    }
+
     let now = Math.floor(Date.now()/1000);
 
-    let start = epochStartFromContract || now;
-    let duration = epochDurationFromContract || 86400;
+    let start = epochStartFromContract;
+    let duration = epochDurationFromContract;
 
-    let epochNumber = Math.floor(
-      (now - start) / duration
-    );
-
+    let epochNumber = Math.floor((now - start) / duration);
     if(epochNumber < 0) epochNumber = 0;
 
-    let nextEpoch =
-      start + ((epochNumber + 1) * duration);
+    let nextEpoch = start + ((epochNumber + 1) * duration);
 
     let remaining = nextEpoch - now;
     if(remaining < 0) remaining = 0;
