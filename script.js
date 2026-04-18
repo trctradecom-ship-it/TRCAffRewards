@@ -114,13 +114,20 @@ async function connectWallet() {
 // ========================== LOAD DASHBOARD DATA ==========================
 async function loadData(){
   try{
-
-    if(!contract || !user) return;
-
     const price = await contract.getTRCPriceUSD();
     document.getElementById("price").innerText = "$"+usd(price);
 
-    // SYSTEM
+    if(chart){
+      chart.data.labels.push(new Date().toLocaleTimeString());
+      chart.data.datasets[0].data.push(usd(price));
+      if(chart.data.labels.length>20){
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+      chart.update();
+    }
+
+    // ✅ SYSTEM DATA ONLY
     document.getElementById("epoch").innerText =
       await contract.currentEpoch();
 
@@ -130,36 +137,31 @@ async function loadData(){
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    // IMPORTANT: LOAD EPOCH DATA
+    
+
+    // ✅ FETCH EPOCH START
     epochStartFromContract = Number(await contract.epochStart());
-    epochDurationFromContract = Number(await contract.getEpochDuration());
 
-    // DEBUG (VERY IMPORTANT)
-    console.log("epochStart:", epochStartFromContract);
-    console.log("epochDuration:", epochDurationFromContract);
-
-    // ================= UI =================
     document.getElementById("epochStart").innerText =
-      epochStartFromContract ? formatTime(epochStartFromContract) : "-";
+      formatTime(epochStartFromContract);
 
-    if(epochStartFromContract && epochDurationFromContract){
-
+    // ✅ NEXT EPOCH
+    if(epochStartFromContract > 0){
       let now = Math.floor(Date.now()/1000);
+      let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
+      if(epochNumber < 0) epochNumber = 0;
 
-      let nextEpoch =
-        epochStartFromContract +
-        (Math.floor((now - epochStartFromContract) / epochDurationFromContract) + 1)
-        * epochDurationFromContract;
+      let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
 
       document.getElementById("nextEpoch").innerText =
         formatTime(nextEpoch);
 
-    } else {
-      document.getElementById("nextEpoch").innerText = "-";
+      // ✅ ALSO USED BY claimTimer (same countdown)
+      // (your startTimers() already updates claimTimer)
     }
 
   }catch(e){
-    console.log("loadData error:", e);
+    console.log(e);
   }
 }
 
@@ -167,32 +169,36 @@ async function loadData(){
 function startTimers(){
   setInterval(()=>{
 
-    if(!epochStartFromContract || !epochDurationFromContract){
-      document.getElementById("epochTimer").innerText = "-";
-      document.getElementById("claimTimer").innerText = "-";
-      return;
-    }
-
     let now = Math.floor(Date.now()/1000);
 
+    let start = epochStartFromContract || now;
+    let duration = epochDurationFromContract || 86400;
+
+    let epochNumber = Math.floor(
+      (now - start) / duration
+    );
+
+    if(epochNumber < 0) epochNumber = 0;
+
     let nextEpoch =
-      epochStartFromContract +
-      (Math.floor((now - epochStartFromContract) / epochDurationFromContract) + 1)
-      * epochDurationFromContract;
+      start + ((epochNumber + 1) * duration);
 
     let remaining = nextEpoch - now;
-
     if(remaining < 0) remaining = 0;
 
     let d = Math.floor(remaining / 86400);
-    let h = Math.floor((remaining % 86400) / 3600);
-    let m = Math.floor((remaining % 3600) / 60);
+    remaining %= 86400;
+
+    let h = Math.floor(remaining / 3600);
+    remaining %= 3600;
+
+    let m = Math.floor(remaining / 60);
     let s = remaining % 60;
 
-    let text = `${d}d ${h}h ${m}m ${s}s`;
+    let timeText = `${d}d ${h}h ${m}m ${s}s`;
 
-    document.getElementById("epochTimer").innerText = text;
-    document.getElementById("claimTimer").innerText = text;
+    document.getElementById("epochTimer").innerText = timeText;
+    document.getElementById("claimTimer").innerText = timeText;
 
   },1000);
 }
