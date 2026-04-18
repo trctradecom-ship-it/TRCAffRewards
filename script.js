@@ -5,10 +5,10 @@ let contract;
 let token;
 let user;
 let chart;
-
+let epochDurationFromContract = 0;
 // ✅ NEW (epoch)
 let epochStartFromContract = 0;
-const EPOCH_DURATION = 7 * 24 * 60 * 60;
+
 
 // ========================== CONTRACT ADDRESSES ==========================
 const contractAddress = "0xe6Ac7c900f1D66602d00989f7206F7404E3669a6";
@@ -170,30 +170,36 @@ async function loadData(){
 function startTimers(){
   setInterval(()=>{
 
-    if(epochStartFromContract === 0) return;
-
     let now = Math.floor(Date.now()/1000);
 
-    let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
+    let start = epochStartFromContract || now;
+    let duration = epochDurationFromContract || 86400;
+
+    let epochNumber = Math.floor(
+      (now - start) / duration
+    );
+
     if(epochNumber < 0) epochNumber = 0;
 
-    let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
+    let nextEpoch =
+      start + ((epochNumber + 1) * duration);
 
     let remaining = nextEpoch - now;
     if(remaining < 0) remaining = 0;
 
-    let d = Math.floor(remaining/86400);
+    let d = Math.floor(remaining / 86400);
     remaining %= 86400;
-    let h = Math.floor(remaining/3600);
+
+    let h = Math.floor(remaining / 3600);
     remaining %= 3600;
-    let m = Math.floor(remaining/60);
+
+    let m = Math.floor(remaining / 60);
     let s = remaining % 60;
 
-    document.getElementById("epochTimer").innerText =
-      `${d}d ${h}h ${m}m ${s}s`;
+    let timeText = `${d}d ${h}h ${m}m ${s}s`;
 
-    document.getElementById("claimTimer").innerText =
-      `${d}d ${h}h ${m}m ${s}s`;
+    document.getElementById("epochTimer").innerText = timeText;
+    document.getElementById("claimTimer").innerText = timeText;
 
   },1000);
 }
