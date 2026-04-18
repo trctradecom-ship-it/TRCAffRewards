@@ -112,7 +112,6 @@ async function connectWallet() {
 }
 
 // ========================== LOAD DASHBOARD DATA ==========================
-// ========================== LOAD DASHBOARD DATA ==========================
 async function loadData(){
   try{
     const price = await contract.getTRCPriceUSD();
@@ -138,27 +137,33 @@ async function loadData(){
     document.getElementById("rewardPool").innerText =
       human(await contract.rewardPool());
 
-    
-    
-    // ✅ FETCH EPOCH START
+    // ================= FIX: EPOCH DATA SYNC =================
     epochStartFromContract = Number(await contract.epochStart());
+    epochDurationFromContract = Number(await contract.getEpochDuration()); // 🔥 ADDED
 
     document.getElementById("epochStart").innerText =
       formatTime(epochStartFromContract);
 
-    // ✅ NEXT EPOCH
-    if(epochStartFromContract > 0){
+    // ================= NEXT EPOCH =================
+    if(epochStartFromContract > 0 && epochDurationFromContract > 0){
+
       let now = Math.floor(Date.now()/1000);
-      let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
+
+      let epochNumber = Math.floor(
+        (now - epochStartFromContract) / epochDurationFromContract
+      );
+
       if(epochNumber < 0) epochNumber = 0;
 
-      let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
+      let nextEpoch =
+        epochStartFromContract +
+        ((epochNumber + 1) * epochDurationFromContract);
 
       document.getElementById("nextEpoch").innerText =
         formatTime(nextEpoch);
 
-      // ✅ ALSO USED BY claimTimer (same countdown)
-      // (your startTimers() already updates claimTimer)
+    } else {
+      document.getElementById("nextEpoch").innerText = "⏳ Loading...";
     }
 
   }catch(e){
