@@ -139,7 +139,7 @@ async function loadData(){
       human(await contract.rewardPool());
 
     
-    epochDurationFromContract = Number(await contract.getEpochDuration());
+    
     // ✅ FETCH EPOCH START
     epochStartFromContract = Number(await contract.epochStart());
 
