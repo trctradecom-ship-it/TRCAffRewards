@@ -145,20 +145,18 @@ async function loadData(){
     document.getElementById("epochStart").innerText =
       formatTime(epochStartFromContract);
 
+    epochDurationFromContract = Number(await contract.getEpochDuration());
     // ✅ NEXT EPOCH
-    if(epochStartFromContract > 0){
-      let now = Math.floor(Date.now()/1000);
-      let epochNumber = Math.floor((now - epochStartFromContract)/EPOCH_DURATION);
-      if(epochNumber < 0) epochNumber = 0;
+    // ================= NEXT EPOCH (FINAL FIX) =================
+    if (epochStartFromContract > 0 && epochDurationFromContract > 0) {
 
-      let nextEpoch = epochStartFromContract + ((epochNumber+1)*EPOCH_DURATION);
+  const nextEpoch = epochStartFromContract + epochDurationFromContract;
 
-      document.getElementById("nextEpoch").innerText =
-        formatTime(nextEpoch);
+  document.getElementById("nextEpoch").innerText =
+    formatTime(nextEpoch);
 
-      // ✅ ALSO USED BY claimTimer (same countdown)
-      // (your startTimers() already updates claimTimer)
-    }
+  // ✅ Used by claimTimer (same countdown)
+    } 
 
   }catch(e){
     console.log(e);
@@ -174,14 +172,7 @@ function startTimers(){
     let start = epochStartFromContract || now;
     let duration = epochDurationFromContract || 86400;
 
-    let epochNumber = Math.floor(
-      (now - start) / duration
-    );
-
-    if(epochNumber < 0) epochNumber = 0;
-
-    let nextEpoch =
-      start + ((epochNumber + 1) * duration);
+    let nextEpoch = start + duration;
 
     let remaining = nextEpoch - now;
     if(remaining < 0) remaining = 0;
