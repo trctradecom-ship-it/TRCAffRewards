@@ -18,6 +18,7 @@ const tokenAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
 const abi = [
   "function currentEpoch() view returns(uint256)",
   "function epochStart() view returns(uint256)", // ✅ ADDED
+  "function getEpochDuration() view returns(uint256)",
   "function downlineCount(address) view returns(uint256)",
   "function epochTotalWeight() view returns(uint256)",
   "function pendingReward(address) view returns(uint256)",
