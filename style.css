@@ -504,7 +504,7 @@ grid-template-columns:1fr;
 
 .faq-box details:hover::before,
 .faq-box details:active::before{
-  animation:goldSwipeRTL 2s ease forwards;
+  animation:goldSwipeRTL 1.7s ease forwards;
 }
 
 .faq-box details:hover,
