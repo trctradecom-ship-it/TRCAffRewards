@@ -330,3 +330,146 @@ grid-template-columns:1fr;
 
 
 
+
+/* =========================
+   FAQ SECTION
+========================= */
+
+.faq-section{
+  padding:60px 15px;
+  background:linear-gradient(180deg,#081018,#0d1622);
+}
+
+.faq-container{
+  max-width:900px;
+  margin:auto;
+}
+
+.faq-title{
+  text-align:center;
+  font-size:32px;
+  color:#ffffff;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.faq-subtitle{
+  text-align:center;
+  color:#b9c4d3;
+  font-size:15px;
+  margin-bottom:35px;
+  line-height:1.5;
+}
+
+/* FAQ BOX */
+
+.faq-box details{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  padding:16px 18px;
+  margin-bottom:14px;
+  transition:0.3s ease;
+}
+
+.faq-box details:hover{
+  border-color:#f5b400;
+  transform:translateY(-2px);
+}
+
+.faq-box summary{
+  color:#ffffff;
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+  list-style:none;
+  position:relative;
+  padding-right:28px;
+}
+
+.faq-box summary::-webkit-details-marker{
+  display:none;
+}
+
+.faq-box summary::after{
+  content:"+";
+  position:absolute;
+  right:0;
+  top:0;
+  font-size:22px;
+  color:#f5b400;
+  font-weight:700;
+}
+
+.faq-box details[open] summary::after{
+  content:"−";
+}
+
+.faq-box p{
+  color:#c8d1dc;
+  font-size:15px;
+  line-height:1.7;
+  margin-top:12px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:768px){
+
+  .faq-title{
+    font-size:26px;
+  }
+
+  .faq-subtitle{
+    font-size:14px;
+  }
+
+  .faq-box summary{
+    font-size:16px;
+  }
+
+  .faq-box p{
+    font-size:14px;
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  .faq-section{
+    padding:45px 12px;
+  }
+
+  .faq-title{
+    font-size:22px;
+  }
+
+  .faq-subtitle{
+    font-size:13px;
+  }
+
+  .faq-box details{
+    padding:14px;
+    border-radius:12px;
+  }
+
+  .faq-box summary{
+    font-size:15px;
+    line-height:1.5;
+  }
+
+  .faq-box p{
+    font-size:13px;
+    line-height:1.6;
+  }
+
+}
+
+
+
