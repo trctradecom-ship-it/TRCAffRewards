@@ -392,7 +392,8 @@ async function showUser(){
   document.getElementById("totalWeight").innerText = "⏳ Loading...";
   document.getElementById("downline").innerText = "⏳ Loading...";
   document.getElementById("referrer").innerText = "⏳ Loading...";
-
+  document.getElementById("lastClaimEpoch").innerText = "⏳ Loading...";
+  
   // ✅ FETCH DATA
   await loadUserData();
 }
@@ -412,7 +413,7 @@ async function loadUserData(){
     document.getElementById("level").innerText = u[1];
     document.getElementById("baseWeight").innerText = u[2];
     document.getElementById("tempWeight").innerText = u[3];
-
+    document.getElementById("lastClaimEpoch").innerText = u[4];
     document.getElementById("totalWeight").innerText =
       await contract.totalWeight();
 
