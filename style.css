@@ -558,15 +558,16 @@ h1::after {
 
   background: linear-gradient(
     120deg,
-    transparent,
-    rgba(255, 213, 79, 0.0),
-    rgba(255, 193, 7, 0.6),
-    rgba(255, 179, 0, 0.4),
-    transparent
+    transparent 0%,
+    rgba(255, 213, 79, 0.0) 20%,
+    rgba(255, 193, 7, 0.6) 50%,
+    rgba(255, 179, 0, 0.4) 70%,
+    transparent 100%
   );
 
   animation: goldSweep 5s linear infinite;
 }
+
 
 @keyframes goldSweep {
   0%   { left: -120%; }
