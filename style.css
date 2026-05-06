@@ -532,18 +532,13 @@ grid-template-columns:1fr;
 
 
 h1 {
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 800;
   text-align: center;
   letter-spacing: 1.5px;
   margin: 10px 0;
 
-  /* EXACT button gradient */
   background: linear-gradient(90deg, #FFD700, #ff7a00);
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* slight depth to match UI */
-  text-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
