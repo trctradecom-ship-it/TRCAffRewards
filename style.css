@@ -531,29 +531,17 @@ grid-template-columns:1fr;
 
 
 
+
 h1 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   text-align: center;
   letter-spacing: 1.5px;
   margin: 10px 0;
 
-  /* exact button-style gold with strong contrast */
-  background: linear-gradient(
-    90deg,
-    #b88200 0%,   /* dark edge */
-    #ffcc00 25%,  /* bright */
-    #fff176 50%,  /* extra shine */
-    #ffcc00 75%,  /* bright */
-    #b88200 100%  /* dark edge */
-  );
+  /* EXACT same as button */
+  background: linear-gradient(90deg, #FFD54F 0%, #FFC107 50%, #FF9800 100%);
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* stronger glow + depth */
-  text-shadow:
-    0 2px 4px rgba(0,0,0,0.8),
-    0 0 10px rgba(255, 200, 0, 0.5),
-    0 0 18px rgba(255, 180, 0, 0.4);
 }
