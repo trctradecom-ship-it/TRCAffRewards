@@ -521,3 +521,35 @@ grid-template-columns:1fr;
     right:140%;
   }
 }
+
+
+
+
+
+
+
+h1 {
+  font-size: 44px;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 2.5px;
+
+  background: linear-gradient(
+    135deg,
+    #7a5a00 0%,
+    #FFD700 25%,
+    #FFF3B0 50%,
+    #FFC107 75%,
+    #7a5a00 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.6),          /* depth */
+    0 4px 12px rgba(255,193,7,0.35),    /* glow */
+    0 0 18px rgba(255,215,0,0.25);      /* soft aura */
+
+  position: relative;
+}
