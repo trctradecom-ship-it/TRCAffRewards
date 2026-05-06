@@ -534,12 +534,36 @@ h1 {
   text-align: center;
   letter-spacing: 1.5px;
   margin: 10px 0;
+  position: relative;
+  overflow: hidden;
 
-  /* same gold feel as connect button */
   background: linear-gradient(135deg, #FFD54F, #FFC107, #FFB300);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* clean, not over-glow */
   text-shadow: 0 2px 6px rgba(255, 193, 7, 0.25);
+}
+
+/* gold shine sweep */
+h1::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+
+  animation: goldSweep 5s linear infinite;
+}
+
+@keyframes goldSweep {
+  0%   { left: -120%; }
+  100% { left: 140%; }
 }
