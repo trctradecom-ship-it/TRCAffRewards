@@ -462,30 +462,22 @@ function copyRef(){
 
 
 
+
 async function loadTotalEarned() {
 
     try {
 
         if (!window.ethereum) return;
 
-        // ✅ ETHERS V5
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         const signer = provider.getSigner();
 
         const user = await signer.getAddress();
 
-        // =========================
-        // ERC20 ABI
-        // =========================
-
         const erc20ABI = [
             "event Transfer(address indexed from,address indexed to,uint256 value)"
         ];
-
-        // =========================
-        // TOKEN CONTRACT
-        // =========================
 
         const trc = new ethers.Contract(
             tokenAddress,
@@ -497,18 +489,18 @@ async function loadTotalEarned() {
         // FETCH EVENTS
         // =========================
 
+        const filter = trc.filters.Transfer(
+            contractAddress,
+            user
+        );
+
         const events = await trc.queryFilter(
-            trc.filters.Transfer(
-                contractAddress,
-                user
-            ),
+            filter,
             0,
             "latest"
         );
 
-        // =========================
-        // CALCULATE TOTAL
-        // =========================
+        console.log("Transfer Events:", events);
 
         let totalEarned = 0;
 
@@ -520,12 +512,17 @@ async function loadTotalEarned() {
 
         });
 
+        console.log("Total Earned:", totalEarned);
+
         // =========================
         // UPDATE UI
         // =========================
 
-        document.getElementById("totalEarned").innerText =
-            totalEarned.toFixed(4) + " TRC";
+        const el = document.getElementById("totalEarned");
+
+        if(el){
+            el.innerText = totalEarned.toFixed(4) + " TRC";
+        }
 
     } catch(err) {
 
