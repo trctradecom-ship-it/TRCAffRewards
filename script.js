@@ -102,8 +102,8 @@ async function connectWallet() {
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
 
     loadData();
-    await loadTotalEarned();
-     
+    
+   
     startTimers(); // ✅ ADDED
     listenEvents();
 
@@ -456,77 +456,3 @@ function copyRef(){
 }
 
 
-
-
-
-
-
-
-
-async function loadTotalEarned() {
-
-    try {
-
-        if (!window.ethereum) return;
-
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        const signer = provider.getSigner();
-
-        const user = await signer.getAddress();
-
-        const erc20ABI = [
-            "event Transfer(address indexed from,address indexed to,uint256 value)"
-        ];
-
-        const trc = new ethers.Contract(
-            tokenAddress,
-            erc20ABI,
-            provider
-        );
-
-        // =========================
-        // FETCH EVENTS
-        // =========================
-
-        const filter = trc.filters.Transfer(
-            contractAddress,
-            user
-        );
-
-        const events = await trc.queryFilter(
-            filter,
-            0,
-            "latest"
-        );
-
-        console.log("Transfer Events:", events);
-
-        let totalEarned = 0;
-
-        events.forEach(event => {
-
-            totalEarned += Number(
-                ethers.utils.formatEther(event.args.value)
-            );
-
-        });
-
-        console.log("Total Earned:", totalEarned);
-
-        // =========================
-        // UPDATE UI
-        // =========================
-
-        const el = document.getElementById("totalEarned");
-
-        if(el){
-            el.innerText = totalEarned.toFixed(4) + " TRC";
-        }
-
-    } catch(err) {
-
-        console.log("Total Earned Error:", err);
-
-    }
-}
