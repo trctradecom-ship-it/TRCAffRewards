@@ -102,8 +102,8 @@ async function connectWallet() {
     token = new ethers.Contract(tokenAddress, tokenABI, signer);
 
     loadData();
-    
-
+    await loadTotalEarned();
+     
     startTimers(); // ✅ ADDED
     listenEvents();
 
@@ -453,4 +453,84 @@ function copyRef(){
 
   navigator.clipboard.writeText(link);
   alert("✅ Link copied!");
+}
+
+
+
+
+
+
+async function loadTotalEarned() {
+
+    try {
+
+        if (!window.ethereum) return;
+
+        const provider = new ethers.BrowserProvider(window.ethereum);
+
+        const signer = await provider.getSigner();
+
+        const user = await signer.getAddress();
+
+        // =========================
+        // ADDRESSES
+        // =========================
+
+        const stakingAddress = "0xd68c6De271da1a05A16050C0E45f7aC716241B32";
+
+        const trcAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
+
+        // =========================
+        // ERC20 ABI
+        // =========================
+
+        const erc20ABI = [
+            "event Transfer(address indexed from,address indexed to,uint256 value)"
+        ];
+
+        // =========================
+        // TOKEN CONTRACT
+        // =========================
+
+        const trc = new ethers.Contract(
+            trcAddress,
+            erc20ABI,
+            provider
+        );
+
+        // =========================
+        // FETCH PAYOUT EVENTS
+        // =========================
+
+        const events = await trc.queryFilter(
+            trc.filters.Transfer(
+                stakingAddress,
+                user
+            ),
+            0,
+            "latest"
+        );
+
+        let totalEarned = 0;
+
+        events.forEach(event => {
+
+            totalEarned += Number(
+                ethers.formatEther(event.args.value)
+            );
+
+        });
+
+        // =========================
+        // UPDATE UI
+        // =========================
+
+        document.getElementById("totalEarned").innerText =
+            totalEarned.toFixed(4) + " TRC";
+
+    } catch(err) {
+
+        console.log(err);
+
+    }
 }
