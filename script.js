@@ -460,25 +460,20 @@ function copyRef(){
 
 
 
+
+
 async function loadTotalEarned() {
 
     try {
 
         if (!window.ethereum) return;
 
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        // ✅ ETHERS V5
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const signer = await provider.getSigner();
+        const signer = provider.getSigner();
 
         const user = await signer.getAddress();
-
-        // =========================
-        // ADDRESSES
-        // =========================
-
-        const stakingAddress = "0xd68c6De271da1a05A16050C0E45f7aC716241B32";
-
-        const trcAddress = "0x56620a4c9667375577B9D543440c3EFE7Ca75673";
 
         // =========================
         // ERC20 ABI
@@ -493,30 +488,34 @@ async function loadTotalEarned() {
         // =========================
 
         const trc = new ethers.Contract(
-            trcAddress,
+            tokenAddress,
             erc20ABI,
             provider
         );
 
         // =========================
-        // FETCH PAYOUT EVENTS
+        // FETCH EVENTS
         // =========================
 
         const events = await trc.queryFilter(
             trc.filters.Transfer(
-                stakingAddress,
+                contractAddress,
                 user
             ),
             0,
             "latest"
         );
 
+        // =========================
+        // CALCULATE TOTAL
+        // =========================
+
         let totalEarned = 0;
 
         events.forEach(event => {
 
             totalEarned += Number(
-                ethers.formatEther(event.args.value)
+                ethers.utils.formatEther(event.args.value)
             );
 
         });
@@ -530,7 +529,7 @@ async function loadTotalEarned() {
 
     } catch(err) {
 
-        console.log(err);
+        console.log("Total Earned Error:", err);
 
     }
 }
