@@ -11,7 +11,7 @@ let epochStartFromContract = 0;
 
 
 // ========================== CONTRACT ADDRESSES ==========================
-const contractAddress = "0xaAB19991Ec87D5E216174A7eb20245cdd0768a9f";
+const contractAddress = "0x8A631D4104dC9ec5904FE9142bFfAD9Db2678947";
 const tokenAddress = "0xCcC20c59bA3827f6E40B7Debc60a804836c55740";
 
 // ========================== ABI ==========================
