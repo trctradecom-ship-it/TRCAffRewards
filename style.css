@@ -633,6 +633,8 @@ h1 {
 /* INFO BOX COLORS */
 /* ALL INFO CARDS */
 
+/* DARK PREMIUM GOLD INFO CARDS */
+
 #systemBox > div,
 #userBox > div{
 
@@ -641,25 +643,27 @@ h1 {
 
   background:
   linear-gradient(135deg,
-  #241300 0%,
-  #7a4c00 35%,
-  #ffbf1f 75%,
-  #5c3300 100%) !important;
+  #050505 0%,
+  #1a0d00 20%,
+  #4d2c00 55%,
+  #8a5a00 78%,
+  #120900 100%) !important;
 
-  border:1px solid rgba(255,220,120,.55) !important;
+  border:1px solid rgba(255,210,100,.35) !important;
 
   border-radius:20px !important;
 
   box-shadow:
-  0 0 12px rgba(255,190,40,.55),
-  0 0 35px rgba(255,190,40,.18),
-  inset 0 1px 1px rgba(255,255,255,.12) !important;
+  0 0 10px rgba(255,170,40,.35),
+  0 0 28px rgba(255,170,40,.12),
+  inset 0 1px 1px rgba(255,255,255,.05),
+  inset 0 -10px 25px rgba(0,0,0,.35) !important;
 
-  color:#ffe082 !important;
+  color:#ffd76a !important;
 }
 
 
-/* GOLD SHINE */
+/* DARK GOLD SHINE */
 
 #systemBox > div::before,
 #userBox > div::before{
@@ -677,9 +681,9 @@ h1 {
   linear-gradient(
   120deg,
   transparent 20%,
-  rgba(255,255,255,.10) 45%,
-  rgba(255,235,170,.35) 50%,
-  rgba(255,255,255,.08) 55%,
+  rgba(255,255,255,.03) 45%,
+  rgba(255,220,120,.12) 50%,
+  rgba(255,255,255,.02) 55%,
   transparent 80%
   ) !important;
 
@@ -696,12 +700,12 @@ h1 {
 #systemBox h3,
 #userBox h3{
 
-  color:#ffe082 !important;
+  color:#ffd76a !important;
 
   font-weight:600;
 
   text-shadow:
-  0 0 10px rgba(255,220,120,.25);
+  0 0 8px rgba(255,210,120,.18);
 }
 
 
@@ -717,11 +721,8 @@ h1 {
   font-weight:500;
 
   text-shadow:
-  0 0 8px rgba(255,255,255,.10);
+  0 0 6px rgba(255,255,255,.08);
 }
-
-
-
 
 
 
