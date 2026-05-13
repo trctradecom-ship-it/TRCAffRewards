@@ -557,14 +557,29 @@ h1 {
 
 
 
-/* =========================================================
-   ONLY DASHBOARD + SYSTEM INFO + USER INFO UI
-   MOBILE FRIENDLY
-   ADD AT BOTTOM OF EXISTING CSS
-========================================================= */
+
+/* ===================================================
+   ONLY COLORS + BACKGROUND
+   NO LAYOUT CHANGES
+   ADD AT BOTTOM OF CSS
+=================================================== */
 
 
-/* ================= DASHBOARD CARD ================= */
+/* MAIN BACKGROUND */
+
+body{
+
+  background:
+  radial-gradient(circle at top,
+  #04152f 0%,
+  #020816 45%,
+  #000000 100%) !important;
+
+  color:#ffffff;
+}
+
+
+/* MAIN CARD BACKGROUND */
 
 .card{
 
@@ -575,63 +590,25 @@ h1 {
 
   border:1px solid rgba(255,180,40,.10) !important;
 
-  border-radius:30px !important;
-
-  padding:22px !important;
-
-  margin-bottom:24px !important;
-
   box-shadow:
   0 0 25px rgba(0,0,0,.45),
   inset 0 1px 0 rgba(255,255,255,.03) !important;
 }
 
 
-/* ================= DASHBOARD TITLE ================= */
+/* DASHBOARD TITLE */
 
 .card h2{
 
-  font-size:54px !important;
-
-  font-weight:800 !important;
-
   color:#ffffff !important;
-
-  margin-bottom:28px !important;
-
-  letter-spacing:-1px !important;
 }
 
 
-/* ================= TABS ================= */
-
-.tabs{
-
-  display:flex !important;
-
-  gap:16px !important;
-
-  margin-bottom:26px !important;
-}
-
-
-/* TAB BUTTON */
+/* SYSTEM / USER BUTTONS */
 
 .tab{
 
-  flex:1 !important;
-
-  height:72px !important;
-
-  border:none !important;
-
-  border-radius:24px !important;
-
-  font-size:20px !important;
-
-  font-weight:700 !important;
-
-  color:#a9afbf !important;
+  color:#aeb5c2 !important;
 
   background:
   linear-gradient(145deg,
@@ -640,15 +617,13 @@ h1 {
 
   border:1px solid rgba(255,255,255,.04) !important;
 
-  transition:.3s ease !important;
-
   box-shadow:
   inset 0 1px 0 rgba(255,255,255,.03),
   0 8px 18px rgba(0,0,0,.28) !important;
 }
 
 
-/* ACTIVE TAB */
+/* ACTIVE BUTTON */
 
 .tab.active{
 
@@ -670,38 +645,10 @@ h1 {
 }
 
 
-/* ================= GRID ================= */
-
-.grid{
-
-  display:flex !important;
-
-  flex-direction:column !important;
-
-  gap:20px !important;
-}
-
-
-/* ================= INFO BOXES ================= */
+/* INFO BOX COLORS */
 
 #systemBox > div,
 #userBox > div{
-
-  position:relative !important;
-
-  overflow:hidden !important;
-
-  min-height:115px !important;
-
-  border-radius:28px !important;
-
-  padding:22px 26px !important;
-
-  display:flex !important;
-
-  flex-direction:column !important;
-
-  justify-content:center !important;
 
   background:
   linear-gradient(135deg,
@@ -717,59 +664,31 @@ h1 {
   0 0 40px rgba(255,180,40,.10),
   inset 0 1px 1px rgba(255,255,255,.05) !important;
 
-  font-size:18px !important;
-
-  font-weight:600 !important;
-
   color:#ffd96a !important;
-
-  letter-spacing:.4px !important;
 }
 
 
-/* GOLD SHINE */
+/* GOLD SHINE EFFECT */
 
 #systemBox > div::before,
 #userBox > div::before{
 
   content:'' !important;
 
-  position:absolute !important;
-
-  top:-30% !important;
-
-  right:-10% !important;
-
-  width:70% !important;
-
-  height:180% !important;
-
   background:
   radial-gradient(circle,
   rgba(255,220,120,.32) 0%,
   rgba(255,220,120,.08) 35%,
   transparent 70%) !important;
-
-  transform:rotate(-18deg) !important;
 }
 
 
-/* TOP LIGHT */
+/* TOP LIGHT LINE */
 
 #systemBox > div::after,
 #userBox > div::after{
 
   content:'' !important;
-
-  position:absolute !important;
-
-  top:0 !important;
-
-  left:18% !important;
-
-  width:65% !important;
-
-  height:2px !important;
 
   background:
   linear-gradient(to right,
@@ -782,99 +701,13 @@ h1 {
 }
 
 
-/* ================= VALUES ================= */
+/* VALUES */
 
 #systemBox span,
 #userBox span{
-
-  display:block !important;
-
-  margin-top:10px !important;
-
-  font-size:50px !important;
-
-  font-weight:800 !important;
 
   color:#ffffff !important;
 
   text-shadow:
   0 0 10px rgba(255,255,255,.08) !important;
 }
-
-
-/* SMALLER VALUES */
-
-#epochStart,
-#nextEpoch,
-#epochTimer,
-#claimTimer,
-#pending,
-#referrer{
-
-  font-size:26px !important;
-
-  font-weight:700 !important;
-}
-
-
-/* ================= MOBILE ================= */
-
-@media(max-width:768px){
-
-.card{
-
-  padding:18px !important;
-
-  border-radius:26px !important;
-}
-
-.card h2{
-
-  font-size:34px !important;
-
-  margin-bottom:22px !important;
-}
-
-.tabs{
-
-  gap:12px !important;
-}
-
-.tab{
-
-  height:62px !important;
-
-  font-size:17px !important;
-
-  border-radius:20px !important;
-}
-
-#systemBox > div,
-#userBox > div{
-
-  min-height:96px !important;
-
-  padding:18px 20px !important;
-
-  border-radius:24px !important;
-
-  font-size:15px !important;
-}
-
-#systemBox span,
-#userBox span{
-
-  font-size:34px !important;
-}
-
-#epochStart,
-#nextEpoch,
-#epochTimer,
-#claimTimer,
-#pending,
-#referrer{
-
-  font-size:21px !important;
-}
-
-    }
