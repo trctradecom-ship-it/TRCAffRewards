@@ -204,6 +204,101 @@ Calculate Reward
       </details>
 
       <details>
+  <summary>What is TRC EMA Price?</summary>
+  <p>
+    TRC EMA (Exponential Moving Average) Price is a smart price smoothing system that reduces sudden market spikes and dumps.
+
+    <br><br>
+
+    <strong>Formula:</strong><br>
+    EMAnew = ((Raw Price × 20) + (Old EMA × 80)) / 100
+
+    <br><br>
+
+    <strong>Example 1:</strong><br>
+    Old EMA Price = $10<br>
+    New Market Price = $15<br><br>
+
+    EMAnew = ((15 × 20) + (10 × 80)) / 100<br>
+    EMAnew = (300 + 800) / 100<br>
+    EMAnew = 1100 / 100<br>
+    EMAnew = $11
+
+    <br><br>
+
+    <strong>Example 2:</strong><br>
+    Old EMA Price = $11<br>
+    New Market Price = $20<br><br>
+
+    EMAnew = ((20 × 20) + (11 × 80)) / 100<br>
+    EMAnew = (400 + 880) / 100<br>
+    EMAnew = 1280 / 100<br>
+    EMAnew = $12.8
+
+    <br><br>
+
+    <strong>Example 3 (Price Drop):</strong><br>
+    Old EMA Price = $12.8<br>
+    New Market Price = $15<br><br>
+
+    EMAnew = ((15 × 20) + (12.8 × 80)) / 100<br>
+    EMAnew = (300 + 1024) / 100<br>
+    EMAnew = 1324 / 100<br>
+    EMAnew = $13.24
+
+    <br><br>
+
+    EMA moves gradually instead of instantly following sudden market changes, helping create a more stable and fair TRC price.
+  </p>
+      </details>
+
+
+    <details>
+  <summary>Why does TRC use EMA Price for level cost stability?</summary>
+  <p>
+    In the TRC system, users join levels using the TRC equivalent value of USD. 
+    This means the required TRC amount changes based on the current TRC market price.
+
+    <br><br>
+
+    If direct raw DEX price is used, sudden price pumps or dumps can create imbalance in level costs.
+
+    <br><br>
+
+    Example:
+    <br>
+    Level Cost = $100
+    <br><br>
+
+    TRC Price = $10 → User pays 10 TRC
+    <br>
+    TRC Price suddenly drops to $5 → User pays 20 TRC
+    <br>
+    TRC Price suddenly pumps to $20 → User pays only 5 TRC
+
+    <br><br>
+
+    This creates unstable joining conditions because users entering at different times may pay very different TRC amounts for the same level.
+
+    <br><br>
+
+    TRC EMA Price helps smooth these sudden market changes by gradually adjusting the joining price instead of instantly following every DEX fluctuation.
+
+    <br><br>
+
+    Benefits of EMA system:
+    <br>
+    • Creates more stable level costs<br>
+    • Reduces sudden TRC amount imbalance<br>
+    • Protects against extreme DEX volatility<br>
+    • Supports fairer user entry conditions<br>
+    • Helps maintain long-term ecosystem stability
+  </p>
+    </details>
+
+
+      
+      <details>
         <summary>How do referral rewards work?</summary>
         <p>
           Qualified uplines receive rewards when team members upgrade levels,
