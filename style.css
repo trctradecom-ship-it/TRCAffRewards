@@ -680,3 +680,35 @@ h1 {
   text-shadow:
   0 0 10px rgba(255,255,255,.08) !important;
 }
+
+
+
+
+
+
+
+
+.container{
+  padding: 10px 15px;
+}
+
+/* REMOVE EXTRA GAP */
+h1{
+  margin: 0;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.topbar{
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.mainBtn{
+  margin: 0;
+}
+
+/* OPTIONAL */
+.chartBox{
+  margin-top: 12px;
+}
