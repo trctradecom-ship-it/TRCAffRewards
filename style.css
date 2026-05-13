@@ -568,8 +568,10 @@ h1 {
 /* DASHBOARD TITLE */
 
 .card h2{
-
-  color:#FFD54A !important;
+  background:linear-gradient(90deg,#FFD700,#FF8C00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  font-weight:bold;
 }
 
 
