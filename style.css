@@ -542,3 +542,339 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ONLY DASHBOARD + SYSTEM INFO + USER INFO UI
+   MOBILE FRIENDLY
+   ADD AT BOTTOM OF EXISTING CSS
+========================================================= */
+
+
+/* ================= DASHBOARD CARD ================= */
+
+.card{
+
+  background:
+  linear-gradient(145deg,
+  rgba(3,10,25,.96),
+  rgba(1,5,12,.98)) !important;
+
+  border:1px solid rgba(255,180,40,.10) !important;
+
+  border-radius:30px !important;
+
+  padding:22px !important;
+
+  margin-bottom:24px !important;
+
+  box-shadow:
+  0 0 25px rgba(0,0,0,.45),
+  inset 0 1px 0 rgba(255,255,255,.03) !important;
+}
+
+
+/* ================= DASHBOARD TITLE ================= */
+
+.card h2{
+
+  font-size:54px !important;
+
+  font-weight:800 !important;
+
+  color:#ffffff !important;
+
+  margin-bottom:28px !important;
+
+  letter-spacing:-1px !important;
+}
+
+
+/* ================= TABS ================= */
+
+.tabs{
+
+  display:flex !important;
+
+  gap:16px !important;
+
+  margin-bottom:26px !important;
+}
+
+
+/* TAB BUTTON */
+
+.tab{
+
+  flex:1 !important;
+
+  height:72px !important;
+
+  border:none !important;
+
+  border-radius:24px !important;
+
+  font-size:20px !important;
+
+  font-weight:700 !important;
+
+  color:#a9afbf !important;
+
+  background:
+  linear-gradient(145deg,
+  rgba(5,10,28,.96),
+  rgba(2,6,18,.98)) !important;
+
+  border:1px solid rgba(255,255,255,.04) !important;
+
+  transition:.3s ease !important;
+
+  box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.03),
+  0 8px 18px rgba(0,0,0,.28) !important;
+}
+
+
+/* ACTIVE TAB */
+
+.tab.active{
+
+  color:#ffe082 !important;
+
+  background:
+  linear-gradient(135deg,
+  #241300 0%,
+  #7a4c00 35%,
+  #ffbf1f 75%,
+  #5c3300 100%) !important;
+
+  border:1px solid rgba(255,220,120,.55) !important;
+
+  box-shadow:
+  0 0 12px rgba(255,190,40,.7),
+  0 0 35px rgba(255,190,40,.22),
+  inset 0 1px 1px rgba(255,255,255,.15) !important;
+}
+
+
+/* ================= GRID ================= */
+
+.grid{
+
+  display:flex !important;
+
+  flex-direction:column !important;
+
+  gap:20px !important;
+}
+
+
+/* ================= INFO BOXES ================= */
+
+#systemBox > div,
+#userBox > div{
+
+  position:relative !important;
+
+  overflow:hidden !important;
+
+  min-height:115px !important;
+
+  border-radius:28px !important;
+
+  padding:22px 26px !important;
+
+  display:flex !important;
+
+  flex-direction:column !important;
+
+  justify-content:center !important;
+
+  background:
+  linear-gradient(135deg,
+  rgba(5,5,8,.98) 0%,
+  rgba(45,25,0,.96) 35%,
+  rgba(140,85,0,.88) 75%,
+  rgba(8,5,0,.98) 100%) !important;
+
+  border:1px solid rgba(255,190,40,.40) !important;
+
+  box-shadow:
+  0 0 15px rgba(255,180,40,.18),
+  0 0 40px rgba(255,180,40,.10),
+  inset 0 1px 1px rgba(255,255,255,.05) !important;
+
+  font-size:18px !important;
+
+  font-weight:600 !important;
+
+  color:#ffd96a !important;
+
+  letter-spacing:.4px !important;
+}
+
+
+/* GOLD SHINE */
+
+#systemBox > div::before,
+#userBox > div::before{
+
+  content:'' !important;
+
+  position:absolute !important;
+
+  top:-30% !important;
+
+  right:-10% !important;
+
+  width:70% !important;
+
+  height:180% !important;
+
+  background:
+  radial-gradient(circle,
+  rgba(255,220,120,.32) 0%,
+  rgba(255,220,120,.08) 35%,
+  transparent 70%) !important;
+
+  transform:rotate(-18deg) !important;
+}
+
+
+/* TOP LIGHT */
+
+#systemBox > div::after,
+#userBox > div::after{
+
+  content:'' !important;
+
+  position:absolute !important;
+
+  top:0 !important;
+
+  left:18% !important;
+
+  width:65% !important;
+
+  height:2px !important;
+
+  background:
+  linear-gradient(to right,
+  transparent,
+  rgba(255,235,160,.95),
+  transparent) !important;
+
+  box-shadow:
+  0 0 12px rgba(255,220,100,.85) !important;
+}
+
+
+/* ================= VALUES ================= */
+
+#systemBox span,
+#userBox span{
+
+  display:block !important;
+
+  margin-top:10px !important;
+
+  font-size:50px !important;
+
+  font-weight:800 !important;
+
+  color:#ffffff !important;
+
+  text-shadow:
+  0 0 10px rgba(255,255,255,.08) !important;
+}
+
+
+/* SMALLER VALUES */
+
+#epochStart,
+#nextEpoch,
+#epochTimer,
+#claimTimer,
+#pending,
+#referrer{
+
+  font-size:26px !important;
+
+  font-weight:700 !important;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+.card{
+
+  padding:18px !important;
+
+  border-radius:26px !important;
+}
+
+.card h2{
+
+  font-size:34px !important;
+
+  margin-bottom:22px !important;
+}
+
+.tabs{
+
+  gap:12px !important;
+}
+
+.tab{
+
+  height:62px !important;
+
+  font-size:17px !important;
+
+  border-radius:20px !important;
+}
+
+#systemBox > div,
+#userBox > div{
+
+  min-height:96px !important;
+
+  padding:18px 20px !important;
+
+  border-radius:24px !important;
+
+  font-size:15px !important;
+}
+
+#systemBox span,
+#userBox span{
+
+  font-size:34px !important;
+}
+
+#epochStart,
+#nextEpoch,
+#epochTimer,
+#claimTimer,
+#pending,
+#referrer{
+
+  font-size:21px !important;
+}
+
+    }
