@@ -568,7 +568,7 @@ h1 {
 /* DASHBOARD TITLE */
 
 .card h2{
-  background:linear-gradient(90deg,#FFD700,#FF8C00);
+  background:linear-gradient(90deg,#C58B00,#FFB300);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   font-weight:bold;
