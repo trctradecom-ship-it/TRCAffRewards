@@ -562,38 +562,7 @@ h1 {
    ONLY COLORS + BACKGROUND
    NO LAYOUT CHANGES
    ADD AT BOTTOM OF CSS
-=================================================== */
-
-
-/* MAIN BACKGROUND */
-
-body{
-
-  background:
-  radial-gradient(circle at top,
-  #04152f 0%,
-  #020816 45%,
-  #000000 100%) !important;
-
-  color:#ffffff;
-}
-
-
-/* MAIN CARD BACKGROUND */
-
-.card{
-
-  background:
-  linear-gradient(145deg,
-  rgba(3,10,25,.96),
-  rgba(1,5,12,.98)) !important;
-
-  border:1px solid rgba(255,180,40,.10) !important;
-
-  box-shadow:
-  0 0 25px rgba(0,0,0,.45),
-  inset 0 1px 0 rgba(255,255,255,.03) !important;
-}
+===================================================
 
 
 /* DASHBOARD TITLE */
