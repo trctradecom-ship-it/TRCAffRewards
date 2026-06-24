@@ -801,11 +801,11 @@ h1{
     color:#fff;
 
     background:linear-gradient(
-        90deg,
-        #7CFF00 0%,
-        #39FF14 50%,
-        #00E676 100%
-    );
+    90deg,
+    #E6FFB3 0%,
+    #CFFF8A 50%,
+    #A8E063 100%
+);
 
-    box-shadow:0 2px 5px rgba(57,255,20,0.12);
-}
+
+    box-shadow:0 2px 3px rgba(168,224,99,0.10);
