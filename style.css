@@ -553,7 +553,14 @@ h1 {
   letter-spacing: 1px;
   margin: 10px 0;
 
-  background: linear-gradient(90deg, #FFD700, #ff7a00);
+  background: linear-gradient(
+  90deg,
+  #FFE8A3 0%,
+  #FFD54F 25%,
+  #FFC107 55%,
+  #FFB300 80%,
+  #FF9800 100%
+);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
