@@ -547,19 +547,18 @@ grid-template-columns:1fr;
 
 
 h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   text-align: center;
   letter-spacing: 1px;
   margin: 10px 0;
 
   background: linear-gradient(
-  90deg,
-  #FFE8A3 0%,
-  #FFD54F 25%,
-  #FFC107 55%,
-  #FFB300 80%,
-  #FF9800 100%
+    90deg,
+    #FFE082 0%,
+    #FFD54F 35%,
+    #FFC107 70%,
+    #FFB300 100%
 );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
