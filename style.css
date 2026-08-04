@@ -1091,3 +1091,139 @@ box-shadow:
     margin-top:0 !important;
     padding-top:0 !important;
 }
+
+
+
+
+
+
+/* =========================================
+   TRADECOM PREMIUM WEB3 BACKGROUND
+   ========================================= */
+
+html,
+body {
+    background:
+        radial-gradient(
+            circle at top center,
+            rgba(40, 70, 145, 0.10) 0%,
+            rgba(18, 30, 60, 0.06) 20%,
+            transparent 45%
+        ),
+
+        radial-gradient(
+            circle at bottom,
+            rgba(255, 190, 40, 0.025) 0%,
+            transparent 50%
+        ),
+
+        linear-gradient(
+            180deg,
+            #09111F 0%,
+            #0D1528 35%,
+            #111B30 70%,
+            #070B15 100%
+        ) !important;
+
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+
+    color: #FFFFFF !important;
+}
+
+/* Premium floating glow */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 15% 10%, rgba(255,190,40,.03), transparent 20%),
+        radial-gradient(circle at 85% 25%, rgba(70,120,255,.05), transparent 22%),
+        radial-gradient(circle at 50% 100%, rgba(255,190,40,.02), transparent 28%);
+}
+
+/* Transparent main wrappers */
+main,
+.wrapper,
+.container,
+.app,
+#root{
+    background:transparent !important;
+}
+
+/* Premium cards */
+.card,
+.panel,
+.dashboard,
+.info-box,
+.box{
+    background:linear-gradient(
+        180deg,
+        #1A212C 0%,
+        #222932 100%
+    ) !important;
+
+    border:1px solid rgba(255,190,40,.28);
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* Hover effect */
+.card:hover,
+.panel:hover,
+.box:hover{
+    border-color:rgba(255,200,60,.45);
+    transition:.25s ease;
+}
+
+/* Buttons */
+button,
+.btn{
+    background:linear-gradient(
+        90deg,
+        #FF8A00,
+        #FFC533
+    ) !important;
+
+    color:#fff !important;
+    border:none;
+
+    box-shadow:
+        0 0 18px rgba(255,190,40,.25),
+        0 0 35px rgba(255,140,0,.12);
+}
+
+/* Text */
+h1,h2,h3,h4,h5,h6{
+    color:#FFFFFF;
+}
+
+p,
+span,
+label{
+    color:#E8EDF7;
+}
+
+/* Gold titles */
+.title,
+.heading,
+.card-title{
+    color:#FFC533;
+}
+
+/* Links */
+a{
+    color:#FFC533;
+}
+
+a:hover{
+    color:#FFD766;
+}
