@@ -978,19 +978,19 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     background: linear-gradient(
         90deg,
-        #ff8c1a 0%,
-        #ff9d14 25%,
-        #ffb000 55%,
-        #ffc11a 80%,
-        #ffd54a 100%
-      
+        #ff7300 0%,
+        #ff8100 18%,
+        #ff9000 38%,
+        #ffa000 60%,
+        #ffad12 82%,
+        #ffb71d 100%
     );
-
-    border:2px solid rgba(255,220,120,.6);
+  
+    border:none;
 
 box-shadow:
-    0 0 18px rgba(255,180,0,.35),
-    inset 0 2px 3px rgba(255,255,255,.25);
+    inset 0 1px 0 rgba(255,255,255,.15),
+    0 2px 6px rgba(255,140,0,.18);
   
     transition:.35s ease;
 }
