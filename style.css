@@ -1062,7 +1062,8 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 #systemBox span,
 #userBox span{
 
-    display:inline;
+    display:block;
+    padding-top:6px;
 
     margin-top:12px;
 
