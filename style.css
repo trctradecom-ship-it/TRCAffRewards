@@ -1082,7 +1082,8 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 }
 
 
-#rewardPool{
+#rewardPool,
+#lastEpochReward{
     display:inline !important;
     margin-top:0 !important;
     padding-top:0 !important;
