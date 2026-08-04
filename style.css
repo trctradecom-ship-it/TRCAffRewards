@@ -843,77 +843,77 @@ h1{
    EXCEPT CALCULATE REWARD BUTTON
 ===================================================== */
 
-/* ==========================================================
-   BRIGHT  STYLE BUTTONS
-   ADD THIS AT THE VERY BOTTOM OF style.css
-========================================================== */
+/* ===== POLK EXACT STYLE ===== */
 
-/* All buttons except Reward Calculator button */
 button:not(.calculator-card button):not([onclick="calculateReward()"]),
 .buy-trc-btn,
 .box button{
 
-    background: linear-gradient(180deg,#FFA21A 0%,#FF9800 55%,#FF8F00 100%) !important;
+    background: linear-gradient(
+        90deg,
+        #ff7300 0%,
+        #ff8100 18%,
+        #ff9000 38%,
+        #ffa000 60%,
+        #ffad12 82%,
+        #ffb71d 100%
+    ) !important;
 
-    color:#FFFFFF !important;
-
-    border:1px solid rgba(255,255,255,.08) !important;
-
-    border-radius:12px !important;
-
+    color:#fff !important;
     font-weight:700 !important;
-
-    letter-spacing:.2px !important;
-
     text-shadow:none !important;
 
-    box-shadow:
-        0 2px 8px rgba(255,153,0,.25),
-        inset 0 1px 0 rgba(255,255,255,.18);
+    border:none !important;
+    border-radius:14px !important;
 
-    transition:all .25s ease;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.15),
+        0 2px 6px rgba(255,140,0,.18);
+
+    transition:.25s ease;
 }
 
-/* Hover */
+/* Soft top highlight like POLK */
+button:not(.calculator-card button):not([onclick="calculateReward()"])::before,
+.buy-trc-btn::before,
+.box button::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.18),
+        rgba(255,255,255,0) 45%
+    );
+    pointer-events:none;
+}
+
+button:not(.calculator-card button):not([onclick="calculateReward()"]),
+.buy-trc-btn,
+.box button{
+    position:relative;
+    overflow:hidden;
+}
 
 button:not(.calculator-card button):not([onclick="calculateReward()"]):hover,
 .buy-trc-btn:hover,
 .box button:hover{
 
-    background: linear-gradient(180deg,#FFAE2B 0%,#FFA000 55%,#FF9500 100%) !important;
+    background: linear-gradient(
+        90deg,
+        #ff7b00 0%,
+        #ff8700 20%,
+        #ff9800 45%,
+        #ffa800 70%,
+        #ffb81d 100%
+    ) !important;
 
     transform:translateY(-1px);
-
-    box-shadow:
-        0 5px 14px rgba(255,153,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.22);
 }
 
-/* Active */
-
-button:not(.calculator-card button):not([onclick="calculateReward()"]):active,
-.buy-trc-btn:active,
-.box button:active{
-
-    background:#FF9800 !important;
-
-    transform:scale(.98);
-}
-
-/* Keep Reward Calculator button green */
-
+/* Keep calculator green */
 .calculator-card button{
-
     background:#22c55e !important;
-
     color:#fff !important;
-
-    border:none !important;
-
-    box-shadow:none !important;
-}
-
-.calculator-card button:hover{
-
-    background:#16a34a !important;
 }
