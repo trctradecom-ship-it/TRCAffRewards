@@ -843,60 +843,77 @@ h1{
    EXCEPT CALCULATE REWARD BUTTON
 ===================================================== */
 
-/* All buttons except calculator */
+/* ==========================================================
+   BRIGHT  STYLE BUTTONS
+   ADD THIS AT THE VERY BOTTOM OF style.css
+========================================================== */
+
+/* All buttons except Reward Calculator button */
 button:not(.calculator-card button):not([onclick="calculateReward()"]),
 .buy-trc-btn,
 .box button{
 
-    background: linear-gradient(180deg,#FFA726 0%,#FF9800 100%) !important;
+    background: linear-gradient(180deg,#FFA21A 0%,#FF9800 55%,#FF8F00 100%) !important;
 
     color:#FFFFFF !important;
 
-    border:none !important;
+    border:1px solid rgba(255,255,255,.08) !important;
+
+    border-radius:12px !important;
 
     font-weight:700 !important;
 
-    letter-spacing:.3px;
+    letter-spacing:.2px !important;
 
     text-shadow:none !important;
 
     box-shadow:
-        0 4px 12px rgba(255,152,0,.30),
-        inset 0 1px 0 rgba(255,255,255,.15);
+        0 2px 8px rgba(255,153,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.18);
 
     transition:all .25s ease;
 }
+
+/* Hover */
 
 button:not(.calculator-card button):not([onclick="calculateReward()"]):hover,
 .buy-trc-btn:hover,
 .box button:hover{
 
-    background: linear-gradient(180deg,#FFB74D 0%,#FFA000 100%) !important;
+    background: linear-gradient(180deg,#FFAE2B 0%,#FFA000 55%,#FF9500 100%) !important;
 
-    color:#FFFFFF !important;
-
-    transform:translateY(-2px);
+    transform:translateY(-1px);
 
     box-shadow:
-        0 8px 22px rgba(255,152,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.18);
+        0 5px 14px rgba(255,153,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.22);
 }
+
+/* Active */
 
 button:not(.calculator-card button):not([onclick="calculateReward()"]):active,
 .buy-trc-btn:active,
 .box button:active{
 
-    background: linear-gradient(180deg,#FF9800 0%,#F57C00 100%) !important;
+    background:#FF9800 !important;
 
     transform:scale(.98);
 }
 
-/* Keep Calculate Reward button green */
+/* Keep Reward Calculator button green */
+
 .calculator-card button{
+
     background:#22c55e !important;
+
     color:#fff !important;
+
+    border:none !important;
+
+    box-shadow:none !important;
 }
 
 .calculator-card button:hover{
+
     background:#16a34a !important;
 }
