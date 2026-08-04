@@ -1098,7 +1098,7 @@ box-shadow:
 
 
 /* ==========================================
-   TRADECOM LUXURY DARK BLUE BACKGROUND
+   TRADECOM PREMIUM DARK BLUE
    ========================================== */
 
 html,
@@ -1108,49 +1108,24 @@ body{
     min-height:100vh;
     overflow-x:hidden;
 
-    background:#050A14 !important;
-
-    background-image:
-
-    /* Top blue glow */
-    radial-gradient(
-        circle at 50% 0%,
-        rgba(59,130,246,.14) 0%,
-        transparent 35%
-    ),
-
-    /* Right ambient light */
-    radial-gradient(
-        circle at 100% 15%,
-        rgba(37,99,235,.08) 0%,
-        transparent 28%
-    ),
-
-    /* Bottom subtle glow */
-    radial-gradient(
-        circle at 0% 100%,
-        rgba(30,64,175,.05) 0%,
-        transparent 30%
-    ),
-
-    /* Main gradient */
-    linear-gradient(
-        180deg,
-        #07111F 0%,
-        #0A1628 25%,
-        #10203A 55%,
-        #0B172B 75%,
-        #050A14 100%
+    background: linear-gradient(
+        135deg,
+        #04070F 0%,
+        #08111F 20%,
+        #0B1B33 45%,
+        #12294A 70%,
+        #08111F 90%,
+        #04070F 100%
     ) !important;
 
-    background-repeat:no-repeat;
-    background-size:cover;
-    background-attachment:fixed;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-    color:#FFFFFF;
+    color: #FFFFFF;
 }
 
-/* Soft overlay */
+/* Luxury ambient lighting */
 body::before{
     content:"";
     position:fixed;
@@ -1159,7 +1134,15 @@ body::before{
     z-index:-1;
 
     background:
-        radial-gradient(circle at top,
-            rgba(255,255,255,.015),
-            transparent 50%);
+        radial-gradient(circle at 50% 0%,
+            rgba(59,130,246,.12),
+            transparent 35%),
+
+        radial-gradient(circle at 100% 20%,
+            rgba(37,99,235,.08),
+            transparent 28%),
+
+        radial-gradient(circle at 0% 100%,
+            rgba(96,165,250,.05),
+            transparent 30%);
 }
