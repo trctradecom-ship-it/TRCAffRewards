@@ -972,7 +972,7 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
     position:relative;
     overflow:hidden;
 
-    padding:18px;
+    padding:12px 16px;
 
     border-radius:24px;
 
@@ -1068,7 +1068,7 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     color:#ffffff;
 
-    font-size:22px;
+    font-size:20px;
 
     font-weight:800;
 
