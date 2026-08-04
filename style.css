@@ -839,6 +839,8 @@ h1{
 
 
 
+
+
 /* =====================================================
    PREMIUM BUTTONS + RESTORE TAB COLORS
 ===================================================== */
@@ -978,4 +980,44 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
         0 0 10px rgba(255,190,40,.55),
         0 0 25px rgba(255,190,40,.18),
         inset 0 1px 0 rgba(255,255,255,.18) !important;
+}
+
+
+
+
+/* =====================================================
+   PREMIUM HOVER EFFECT
+===================================================== */
+
+button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):hover,
+.buy-trc-btn:hover,
+.box button:hover{
+
+    transform:translateY(-3px) scale(1.02);
+
+    filter:brightness(1.05);
+
+    box-shadow:
+        0 0 12px rgba(255,180,40,.28),
+        0 0 26px rgba(255,150,20,.18),
+        0 12px 26px rgba(255,145,0,.30),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    transition:all .35s ease;
+}
+
+button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):hover::before,
+.buy-trc-btn:hover::before,
+.box button:hover::before{
+
+    left:180%;
+    transition:left .85s ease;
+}
+
+button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):active,
+.buy-trc-btn:active,
+.box button:active{
+
+    transform:scale(.98);
+    transition:.12s;
 }
