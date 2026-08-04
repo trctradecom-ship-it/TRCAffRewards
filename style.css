@@ -1020,7 +1020,7 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     transform:skewX(-25deg);
 
-    transition:.9s;
+    transition:1.5s;
 }
 
 #systemBox > div:hover::before,
@@ -1062,9 +1062,9 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 #systemBox span,
 #userBox span{
 
-    display:block;
+    display:inline;
 
-    margin-top:2px;
+    margin-top:4px;
 
     color:#ffffff;
 
