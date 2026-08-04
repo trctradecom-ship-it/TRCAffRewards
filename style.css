@@ -1063,11 +1063,11 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 #userBox span{
 
     display:block;
-    padding-top:6px;
+    padding-top:3px;
 
     margin-top:12px;
 
-    padding-left:6px;
+    padding-left:4px;
 
     color:#ffffff;
 
@@ -1081,3 +1081,9 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
         0 1px 4px rgba(0,0,0,.45);
 }
 
+
+#rewardPool{
+    display:inline !important;
+    margin-top:0 !important;
+    padding-top:0 !important;
+}
