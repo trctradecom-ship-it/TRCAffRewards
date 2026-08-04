@@ -845,143 +845,80 @@ h1{
    PREMIUM BUTTONS + RESTORE TAB COLORS
 ===================================================== */
 
-/* ---------- MAIN BUTTONS ---------- */
+/* ===== POLK EXACT STYLE ===== */
 
-button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]),
+button:not(.calculator-card button):not([onclick="calculateReward()"]),
 .buy-trc-btn,
 .box button{
 
-    position:relative;
-    overflow:hidden;
-
-    background:linear-gradient(
+    background: linear-gradient(
         90deg,
-        #ff7000 0%,
-        #ff7600 45%,
-        #ff8400 65%,
-        #ff9800 82%,
-        #ffb114 94%,
-        #ffbe2a 100%
+        #ff7300 0%,
+        #ff8100 18%,
+        #ff9000 38%,
+        #ffa000 60%,
+        #ffad12 82%,
+        #ffb71d 100%
     ) !important;
 
     color:#fff !important;
-
-    border:none !important;
-
-    border-radius:14px !important;
-
     font-weight:700 !important;
-
     text-shadow:none !important;
 
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.18),
-        0 4px 12px rgba(255,136,0,.20);
+    border:none !important;
+    border-radius:14px !important;
 
-    transition:.35s ease;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.15),
+        0 2px 6px rgba(255,140,0,.18);
+
+    transition:.25s ease;
 }
 
-/* Premium moving shine */
-
-button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])::before,
+/* Soft top highlight like POLK */
+button:not(.calculator-card button):not([onclick="calculateReward()"])::before,
 .buy-trc-btn::before,
 .box button::before{
-
     content:"";
-
     position:absolute;
-
-    top:0;
-    left:-140%;
-
-    width:60%;
-    height:100%;
-
+    inset:0;
+    border-radius:inherit;
     background:linear-gradient(
-        115deg,
-        transparent,
+        180deg,
         rgba(255,255,255,.18),
-        transparent
+        rgba(255,255,255,0) 45%
     );
-
-    transform:skewX(-25deg);
-
-    transition:.8s;
+    pointer-events:none;
 }
 
-button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):hover::before,
-.buy-trc-btn:hover::before,
-.box button:hover::before{
-
-    left:170%;
+button:not(.calculator-card button):not([onclick="calculateReward()"]),
+.buy-trc-btn,
+.box button{
+    position:relative;
+    overflow:hidden;
 }
 
-button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):hover,
+button:not(.calculator-card button):not([onclick="calculateReward()"]):hover,
 .buy-trc-btn:hover,
 .box button:hover{
 
-    transform:translateY(-2px);
+    background: linear-gradient(
+        90deg,
+        #ff7b00 0%,
+        #ff8700 20%,
+        #ff9800 45%,
+        #ffa800 70%,
+        #ffb81d 100%
+    ) !important;
 
-    box-shadow:
-        0 8px 20px rgba(255,145,0,.28),
-        inset 0 1px 0 rgba(255,255,255,.22);
+    transform:translateY(-1px);
 }
 
-button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"]):active,
-.buy-trc-btn:active,
-.box button:active{
-
-    transform:scale(.98);
-}
-
-/* ---------- KEEP CALCULATOR GREEN ---------- */
-
+/* Keep calculator green */
 .calculator-card button{
-
     background:#22c55e !important;
-
     color:#fff !important;
 }
-
-/* ---------- RESTORE SYSTEM / USER TAB COLORS ---------- */
-
-.tab{
-
-    background:linear-gradient(
-        145deg,
-        rgba(5,10,28,.96),
-        rgba(2,6,18,.98)
-    ) !important;
-
-    color:#bfc6d3 !important;
-
-    border:1px solid rgba(255,255,255,.05) !important;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.03),
-        0 5px 12px rgba(0,0,0,.28) !important;
-}
-
-.tab.active{
-
-    background:linear-gradient(
-        135deg,
-        #241300 0%,
-        #7a4c00 35%,
-        #ffbf1f 75%,
-        #5c3300 100%
-    ) !important;
-
-    color:#fff4d0 !important;
-
-    border:1px solid rgba(255,220,120,.55) !important;
-
-    box-shadow:
-        0 0 10px rgba(255,190,40,.55),
-        0 0 25px rgba(255,190,40,.18),
-        inset 0 1px 0 rgba(255,255,255,.18) !important;
-}
-
 
 
 
