@@ -1064,7 +1064,9 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     display:inline;
 
-    margin-top:4px;
+    margin-top:6px;
+
+    padding-left:12px;
 
     color:#ffffff;
 
