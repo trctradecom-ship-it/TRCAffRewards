@@ -1043,7 +1043,7 @@ box-shadow:
 #systemBox div,
 #userBox div{
 
-    color:#ffd700;
+    color:#ffd700 !important;
 
     font-size:18px;
 
