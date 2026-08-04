@@ -1063,9 +1063,9 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 #userBox span{
 
     display:block;
-    padding-top:3px;
+    padding-top:0px;
 
-    margin-top:12px;
+    margin-top:4px;
 
     padding-left:4px;
 
