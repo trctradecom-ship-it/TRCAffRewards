@@ -1051,7 +1051,7 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     font-weight:500;
 
-    line-height:1.4;
+    line-height:1.1;
 
     text-shadow:
         0 1px 3px rgba(0,0,0,.35);
@@ -1064,7 +1064,7 @@ button:not(.tab):not(.calculator-card button):not([onclick="calculateReward()"])
 
     display:block;
 
-    margin-top:8px;
+    margin-top:2px;
 
     color:#ffffff;
 
