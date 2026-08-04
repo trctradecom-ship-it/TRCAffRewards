@@ -1098,7 +1098,7 @@ box-shadow:
 
 
 /* ==========================================
-   TRADECOM APPLE × BINANCE PREMIUM THEME
+   TRADECOM LUXURY DARK PURPLE THEME
    ========================================== */
 
 html,
@@ -1106,32 +1106,50 @@ body{
     margin:0;
     padding:0;
     min-height:100vh;
+    overflow-x:hidden;
 
-    background:#090909 !important;
+    background-color:#0D0918 !important;
 
     background-image:
-        radial-gradient(
-            circle at top,
-            rgba(255,255,255,.025) 0%,
-            transparent 35%
-        ),
 
-        linear-gradient(
-            180deg,
-            #090909 0%,
-            #0D1018 35%,
-            #11141C 70%,
-            #090909 100%
-        );
+    /* Premium purple glow */
+    radial-gradient(
+        circle at top,
+        rgba(122,90,248,.14) 0%,
+        transparent 40%
+    ),
+
+    /* Purple ambient light */
+    radial-gradient(
+        circle at 90% 20%,
+        rgba(168,85,247,.08) 0%,
+        transparent 28%
+    ),
+
+    /* Warm gold accent */
+    radial-gradient(
+        circle at bottom,
+        rgba(255,193,7,.03) 0%,
+        transparent 40%
+    ),
+
+    /* Main background */
+    linear-gradient(
+        180deg,
+        #120A22 0%,
+        #1A1230 35%,
+        #23173F 70%,
+        #0B0715 100%
+    ) !important;
 
     background-repeat:no-repeat;
     background-size:cover;
     background-attachment:fixed;
 
-    color:#FFFFFF !important;
+    color:#FFFFFF;
 }
 
-/* Soft premium overlay */
+/* Soft luxury overlay */
 body::before{
     content:"";
     position:fixed;
@@ -1140,25 +1158,7 @@ body::before{
     z-index:-1;
 
     background:
-        radial-gradient(circle at top center,
+        radial-gradient(circle at center,
             rgba(255,255,255,.015),
-            transparent 45%);
-}
-
-/* Optional scrollbar */
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-track{
-    background:#090909;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#2B2B2B;
-    border-radius:10px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-    background:#3C3C3C;
+            transparent 60%);
 }
